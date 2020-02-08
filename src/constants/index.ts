@@ -1,6 +1,6 @@
-import { WCliConfigJson } from "../types/configJsonType";
+import { WCliConfigJson } from '../types/configJsonType';
 
-export const defaultWCliConfigJson:WCliConfigJson =  {
+const defaultWCliConfigJson: WCliConfigJson = {
   name: 'DEFAULT_NAME',
   package: 'yarn',
   path: {
@@ -14,4 +14,7 @@ export const defaultWCliConfigJson:WCliConfigJson =  {
     proxy: {}
   },
   publish: null
+}
+export {
+  defaultWCliConfigJson
 }

@@ -1,10 +1,10 @@
-import { SystemError } from "./error"
+import { SystemError } from './error'
 import * as log from '../log'
 
-export default function errorHandler(next: any) {
-  return async function(...args: any[]) {
+export default function errorHandler(next: (...args: any[]) => any) {
+  return async function (...args: any[]): Promise<void> {
     try {
-      await next()
+      await next(...args)
     } catch (error) {
       const isSystemError: boolean = error instanceof SystemError
       // 如果是自定义错误实例 那么就是已知错误
@@ -17,6 +17,5 @@ export default function errorHandler(next: any) {
         throw error
       }
     }
-
   }
 }

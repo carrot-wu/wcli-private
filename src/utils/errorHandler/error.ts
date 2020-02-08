@@ -4,7 +4,6 @@ interface ErrorConfig {
 }
 export class SystemError extends Error {
   public code: number;
-  public msg: string;
 
   public constructor(config: ErrorConfig) {
     const { code = 999, msg } = config
@@ -14,6 +13,6 @@ export class SystemError extends Error {
   }
 }
 
-export default function throwHandleError(msg:string, code?:number){
-  throw new SystemError({msg, code})
+export default function throwHandleError(msg: string, code?: number): void {
+  throw new SystemError({ msg, code })
 }
