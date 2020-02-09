@@ -6,7 +6,7 @@ import * as packageJson from '../../../package.json';
 const currentBinPath: string = process.cwd()
 
 // 执行命令项目文件获取路径方法
-const getCurrentBinFilePath = (...path: string[]) => resolve(currentBinPath, ...path)
+const getCurrentBinFilePath = (...path: string[]): string => resolve(currentBinPath, ...path)
 
 // 执行命令项目的wcliconfig.json路径
 const currentWcliConfigPath = getCurrentBinFilePath('./wcliconfig.json')

@@ -12,7 +12,7 @@ type TypeChecker = {
   date: Date;
   error: Error;
 };
-const { toString: typeToString } = Object.prototype.toString;
+const typeToString = Object.prototype.toString
 const checkType = <U extends keyof TypeChecker>(type: U) => (val: unknown): val is TypeChecker[U] => (
   typeToString
     .call(val)

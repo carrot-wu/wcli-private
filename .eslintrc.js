@@ -26,6 +26,7 @@ module.exports = {
     // 允许export一个模块
     'import/prefer-default-export': 0,
     'comma-dangle': ['error', 'only-multiline'],
+    'consistent-return': 0
   },
   'settings': {
     //解决路径引用ts文件报错的问题

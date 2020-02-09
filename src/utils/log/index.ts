@@ -14,11 +14,11 @@ const infoMap: InfoMap = {
   },
   loading: {
     text: 'loading',
-    color: 'blue'
+    color: 'yellow'
   },
   info: {
     text: 'info',
-    color: 'yellow'
+    color: 'blue'
   },
   warn: {
     text: 'warn',

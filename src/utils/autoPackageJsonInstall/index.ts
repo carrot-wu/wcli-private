@@ -16,8 +16,8 @@ export default function autoPackageJsonInstall(path: string, installType: Instal
   const packageJsonPath = resolve(path, 'package.json')
   // 存在package 不存在node_modules
   if (existsSync(packageJsonPath) && !existsSync(nodeModulesPath)) {
-    loading('plugin is auto installing...')
-    execSync(`${installType} install`)
-    success(`${installType} install success!`)
+    loading('相关依赖安装中...')
+    execSync(`${installType} install`, { cwd: path, stdio: 'inherit' })
+    success('依赖安装成功！')
   }
 }

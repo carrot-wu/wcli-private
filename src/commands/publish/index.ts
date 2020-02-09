@@ -1,10 +1,10 @@
-import { WCliConfigJson } from '../types/configJsonType'
-import { currentWcliConfig } from '../utils/filePath'
-import throwHandleError from '../utils/errorHandler/error'
-import { formatWCliConfigJson } from '../utils/format'
-import { getPluginFileByName } from '../utils/getPluginFile'
-import { isFunction } from '../utils/checktype'
-import { createPublishContext } from '../utils/createContext'
+import { WCliConfigJson } from '../../types/configJsonType'
+import { currentWcliConfig } from '../../utils/filePath'
+import throwHandleError from '../../utils/errorHandler/error'
+import { formatWCliConfigJson } from '../../utils/format'
+import { getPluginFileByName } from '../../utils/getPluginFile'
+import { isFunction } from '../../utils/checktype'
+import { createPublishContext } from '../../utils/createContext'
 
 interface Options {
   debug?: boolean;
@@ -12,7 +12,7 @@ interface Options {
 
 const PUBLISH_FILE = 'publish.js'
 // 发布模式命令
-const publishAction = (options: Options) => {
+const publishCommand = (options: Options) => {
   const debug: boolean = options.debug || false
   // 获取当前目录下的配置文件wcliconfig.json
   if (!currentWcliConfig) {
@@ -31,4 +31,4 @@ const publishAction = (options: Options) => {
   return publishFile(createPublishContext({ wcliConfigJson, debug }))
 }
 
-export default publishAction
+export default publishCommand
