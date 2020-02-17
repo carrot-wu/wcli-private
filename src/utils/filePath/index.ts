@@ -1,7 +1,7 @@
 // 根据路径引用相关文件
 import { resolve } from 'path';
-import { existsSync } from 'fs'
-import * as packageJson from '../../../package.json';
+import { existsSync } from 'fs-extra'
+import * as packageJson from '../../../package.json'
 // 当前执行命令所在目录
 const currentBinPath: string = process.cwd()
 

@@ -51,5 +51,6 @@ export function getPluginFileByName(wcliConfigJson: WCliConfigJson, filePath: st
     // 对应的文件不存在
     throwHandleError(`插件：${plugin.bold}已安装，但是插件目录下缺少相应的${execFileName.bold}文件`)
   }
-  return import(pluginFilePath)
+  // eslint-disable-next-line
+  return require(pluginFilePath)
 }

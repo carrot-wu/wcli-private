@@ -5,6 +5,7 @@ import { formatWCliConfigJson } from '../../utils/format'
 import { getPluginFileByName } from '../../utils/getPluginFile'
 import { isFunction } from '../../utils/checktype'
 import { createPublishContext } from '../../utils/createContext'
+import { getPublishGitssh } from './utils';
 
 interface Options {
   debug?: boolean;
@@ -12,7 +13,7 @@ interface Options {
 
 const PUBLISH_FILE = 'publish.js'
 // 发布模式命令
-const publishCommand = (options: Options) => {
+const publishCommand = async (options: Options) => {
   const debug: boolean = options.debug || false
   // 获取当前目录下的配置文件wcliconfig.json
   if (!currentWcliConfig) {
@@ -27,8 +28,10 @@ const publishCommand = (options: Options) => {
   if (!isFunction(publishFile)) {
     throwHandleError(`${PUBLISH_FILE} is not the function`)
   }
+  // 获取发布仓库的ssh
+  const ssh = await getPublishGitssh(wcliConfigJson)
   // 把一些通用上下文参数和方法注入
-  return publishFile(createPublishContext({ wcliConfigJson, debug }))
+  return publishFile(createPublishContext({ wcliConfigJson, debug, publishSsh: ssh }))
 }
 
 export default publishCommand
