@@ -1,11 +1,12 @@
 import { WCliConfigJson } from '../../types/configJsonType'
-import { currentWcliConfig } from '../../utils/filePath'
+import { currentWcliConfig } from '../../utils/file'
 import throwHandleError from '../../utils/errorHandler/error'
 import { formatWCliConfigJson } from '../../utils/format'
 import { getPluginFileByName } from '../../utils/getPluginFile'
 import { isFunction } from '../../utils/checktype'
 import { createPublishContext } from '../../utils/createContext'
-import { getPublishGitssh } from './utils';
+import { getPublishGitToken } from './utils';
+import { getCommitMessage } from '../../utils/gitlab';
 
 interface Options {
   debug?: boolean;
@@ -28,10 +29,13 @@ const publishCommand = async (options: Options) => {
   if (!isFunction(publishFile)) {
     throwHandleError(`${PUBLISH_FILE} is not the function`)
   }
-  // 获取发布仓库的ssh
-  const ssh = await getPublishGitssh(wcliConfigJson)
+  // 获取发布仓库的token
+  const token = await getPublishGitToken(wcliConfigJson)
+  // 获取此次发布填写的commitMessage
+  const publishCommitMsg = await getCommitMessage()
+
   // 把一些通用上下文参数和方法注入
-  return publishFile(createPublishContext({ wcliConfigJson, debug, publishSsh: ssh }))
+  return publishFile(createPublishContext({ wcliConfigJson, debug, publishSsh: token, publishCommitMsg }))
 }
 
 export default publishCommand

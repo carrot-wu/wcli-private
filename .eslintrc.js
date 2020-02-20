@@ -9,8 +9,12 @@ module.exports = {
   'rules': {
     //缩进双空格
     '@typescript-eslint/indent': ['error', 2],
+    //允许下划线命令
+    '@typescript-eslint/camelcase': 0,
     //接口命名允许以I开头
     '@typescript-eslint/interface-name-prefix': 0,
+    //允许tslint
+    '@typescript-eslint/ban-ts-ignore': 0,
     //允许不添加分号
     'semi': 0,
     // 不检测花括号后是否要换行
@@ -26,7 +30,9 @@ module.exports = {
     // 允许export一个模块
     'import/prefer-default-export': 0,
     'comma-dangle': ['error', 'only-multiline'],
-    'consistent-return': 0
+    'consistent-return': 0,
+    // 允许使用++
+    'no-plusplus': 0
   },
   'settings': {
     //解决路径引用ts文件报错的问题

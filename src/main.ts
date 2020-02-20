@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import * as commander from 'commander';
 import 'colors'
-import { packageJson } from './utils/filePath'
+import { packageJson } from './utils/file'
 import publishCommand from './commands/publish';
 import pluginCommand from './commands/plugin';
 import errorHandler from './utils/errorHandler/index';

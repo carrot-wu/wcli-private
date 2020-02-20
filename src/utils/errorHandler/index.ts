@@ -14,7 +14,8 @@ export default function errorHandler(next: (...args: any[]) => any) {
         process.exit(1)
       } else {
         // 未知错误
-        throw error
+        console.error(error)
+        process.exit(1)
       }
     }
   }
