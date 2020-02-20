@@ -67,7 +67,7 @@ interface PublishFileWithCommitRes {
 }
 
 // 获取分支最新commit
-async function getLatestCommitId(projectConfig: ProjectConfig, token?: string) {
+async function getLatestCommitId(projectConfig: ProjectConfig, token?: string): Promise<string> {
   const url = getSingleBranch(projectConfig)
   const { data } = await axios.get<GetCommitIdData>(url, {
     headers: {
@@ -102,10 +102,8 @@ async function publishFileWithCommit(publishParams: PublishFileWithCommitParams)
   // 添加新生成的静态文件
   distFileArray.forEach((distPath) => {
     // 把绝对路径处理成相对路径
-    const relativePath = path.relative(binDistFilePath, target)
-    // eslint-disable-next-line no-useless-escape
-    const filePath = path.join(target, relativePath)
-    console.log(filePath)
+    const relativePath = path.relative(binDistFilePath, distPath)
+    const filePath = path.normalize(path.join(target, relativePath)).replace(/\\/g, '/')
     // 判断是文本还是二进制格式
     const isTextFile = checkIsTextFile(distPath)
     actions.push({
@@ -121,25 +119,25 @@ async function publishFileWithCommit(publishParams: PublishFileWithCommitParams)
     commit_message: commitMsg,
     actions
   }
-  // try {
-  //   log.loading(`开始上传静态到远程仓库[${repository.bold}]`)
-  //   const res = await axios.post<PublishFileWithCommitRes>(commitUrl, commit, {
-  //     headers: {
-  //       'PRIVATE-TOKEN': token,
-  //       'X-Requested-With': 'XMLHttpRequest',
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //   if (res && res.data && res.data.id) {
-  //     log.success('上传成功')
-  //     return res.data.id
-  //   }
-  //   log.error('上传失败')
-  //   return Promise.reject(res.statusText)
-  // } catch (e) {
-  //   log.error('上传失败')
-  //   throw e
-  // }
+  try {
+    log.loading(`开始上传静态到远程仓库[${repository.bold}]`)
+    const res = await axios.post<PublishFileWithCommitRes>(commitUrl, commit, {
+      headers: {
+        'PRIVATE-TOKEN': token,
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json'
+      }
+    })
+    if (res && res.data && res.data.id) {
+      log.success('上传成功')
+      return res.data.id
+    }
+    log.error('上传失败')
+    return Promise.reject(res.statusText)
+  } catch (e) {
+    log.error('上传失败')
+    throw e
+  }
 }
 
 export {

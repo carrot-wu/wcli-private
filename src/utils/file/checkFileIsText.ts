@@ -12,8 +12,7 @@ const checkIsTextFile = (filePath: string, length = 1000): boolean => {
   for (let i = 0; i < length; i++) {
     const buf = Buffer.alloc(1)
     const bytes = fse.readSync(fd, buf, 0, 1, i)
-    // @ts-ignore
-    const char = buf.toString().charCodeAt()
+    const char = buf.toString().charCodeAt(0)
     if (bytes === 0) {
       return true
     } if (bytes === 1 && char === 0) {

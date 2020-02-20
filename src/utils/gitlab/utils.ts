@@ -12,13 +12,13 @@ interface BranchFileTreeParams {
 interface BranchFileTreeRes {
   id: string;
   name: string;
-  type: string;
+  type: 'tree' | 'blob';
   path: string;
   mode: string;
 }
 
 /**
- * 获取分支树形文件结构
+ * 获取分支文件结构
  * @param {BranchFileTreeParams} params
  * @returns {Promise<BranchFileTreeRes[]>}
  */
@@ -32,10 +32,13 @@ async function getBranchFileTree(params: BranchFileTreeParams): Promise<BranchFi
     },
     params: {
       ref: branch,
-      path: target
+      path: target,
+      recursive: true,
+      per_page: 5000
     }
   })
-  return data
+  //  其中tree为文件夹 需要剔除
+  return data.filter((file) => file.type !== 'tree')
 }
 
 export {
