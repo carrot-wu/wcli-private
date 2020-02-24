@@ -5,7 +5,7 @@ export interface TokenChoice {
 }
 const ADD_NEW_TOKEN = 'ADD_NEW_TOKEN'
 const NOT_NEED_TOKEN = 'NOT_NEED_TOKEN'
-const defaultSshConfigArray: TokenChoice[] = [
+const defaultTokenConfigArray: TokenChoice[] = [
   {
     key: ADD_NEW_TOKEN,
     name: '为该项目重新输入一个新的token',
@@ -20,5 +20,5 @@ const defaultSshConfigArray: TokenChoice[] = [
 export {
   ADD_NEW_TOKEN,
   NOT_NEED_TOKEN,
-  defaultSshConfigArray
+  defaultTokenConfigArray
 }

@@ -6,7 +6,7 @@ import { getPluginFileByName } from '../../utils/getPluginFile'
 import { isFunction } from '../../utils/checktype'
 import { createPublishContext } from '../../utils/createContext'
 import { getPublishGitToken } from './utils';
-import { getCommitMessage } from '../../utils/gitlab';
+import { getCommitMessage } from './gitlab';
 
 interface Options {
   debug?: boolean;
@@ -35,7 +35,7 @@ const publishCommand = async (options: Options) => {
   const publishCommitMsg = await getCommitMessage()
 
   // 把一些通用上下文参数和方法注入
-  return publishFile(createPublishContext({ wcliConfigJson, debug, publishSsh: token, publishCommitMsg }))
+  return publishFile(createPublishContext({ wcliConfigJson, debug, publishToken: token, publishCommitMsg }))
 }
 
 export default publishCommand

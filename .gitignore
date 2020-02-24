@@ -5,9 +5,10 @@
 # testing
 /coverage
 
-# production
-/dist
+# 插件目录
+/plugins
 
+# 缓存的token
 config.json
 npm-debug.log*
 yarn-debug.log*

@@ -2,19 +2,13 @@ import * as path from 'path'
 import * as fse from 'fs-extra'
 import axios from 'axios'
 import { getPublishCommitApi, getSingleBranch } from './api';
-import { directorWalker } from '../file/directorWalker';
-import { getCurrentBinFilePath } from '../file';
+import { directorWalker } from '../../../utils/file/directorWalker';
+import { getCurrentBinFilePath } from '../../../utils/file';
 import { getBranchFileTree } from './utils';
-import { checkIsTextFile } from '../file/checkFileIsText';
-import * as log from '../log'
+import { checkIsTextFile } from '../../../utils/file/checkFileIsText';
+import * as log from '../../../utils/log'
+import { PublishConfig } from '../../../types/publishConfig';
 
-interface ProjectConfig {
-  git: string;
-  repository: string;
-  branch: string;
-  target: string;
-  dist?: string;
-}
 
 interface GetCommitIdData {
   name: string;
@@ -51,12 +45,12 @@ interface CommitAction {
   execute_filemode?: boolean;
 }
 
-interface PublishFileWithCommitParams {
-  projectConfig: ProjectConfig;
+interface PublishFileWithGitlabCommitParams {
+  publishConfig: PublishConfig;
   commitMsg: string;
   token?: string;
 }
-interface PublishFileWithCommitRes {
+interface PublishFileWithGitlabCommitRes {
   id: string;
   message: string;
   stats: {
@@ -67,8 +61,8 @@ interface PublishFileWithCommitRes {
 }
 
 // 获取分支最新commit
-async function getLatestCommitId(projectConfig: ProjectConfig, token?: string): Promise<string> {
-  const url = getSingleBranch(projectConfig)
+async function getLatestCommitId(publishConfig: PublishConfig, token?: string): Promise<string> {
+  const url = getSingleBranch(publishConfig)
   const { data } = await axios.get<GetCommitIdData>(url, {
     headers: {
       'PRIVATE-TOKEN': token,
@@ -78,9 +72,9 @@ async function getLatestCommitId(projectConfig: ProjectConfig, token?: string): 
   return data.commit.id
 }
 
-async function publishFileWithCommit(publishParams: PublishFileWithCommitParams) {
-  const { projectConfig, commitMsg, token } = publishParams
-  const { git, repository, target, branch = 'master', dist = 'dist' } = projectConfig
+async function publishFileWithGitlabCommit(publishParams: PublishFileWithGitlabCommitParams) {
+  const { publishConfig, commitMsg, token } = publishParams
+  const { git, repository, target, branch = 'master', dist = 'dist' } = publishConfig
   // 命令行执行的dist目录地址
   const binDistFilePath = getCurrentBinFilePath(dist)
   // 获取commit api
@@ -88,7 +82,7 @@ async function publishFileWithCommit(publishParams: PublishFileWithCommitParams)
   // 构建commit数组
   const actions: CommitAction[] = []
   // 先获取目标分支的树形结构
-  const treeArray = await getBranchFileTree({ ...projectConfig, token })
+  const treeArray = await getBranchFileTree({ ...publishConfig, token })
   // 删除文件
   treeArray.forEach((file) => {
     actions.push({
@@ -121,7 +115,7 @@ async function publishFileWithCommit(publishParams: PublishFileWithCommitParams)
   }
   try {
     log.loading(`开始上传静态到远程仓库[${repository.bold}]`)
-    const res = await axios.post<PublishFileWithCommitRes>(commitUrl, commit, {
+    const res = await axios.post<PublishFileWithGitlabCommitRes>(commitUrl, commit, {
       headers: {
         'PRIVATE-TOKEN': token,
         'X-Requested-With': 'XMLHttpRequest',
@@ -142,5 +136,5 @@ async function publishFileWithCommit(publishParams: PublishFileWithCommitParams)
 
 export {
   getLatestCommitId,
-  publishFileWithCommit
+  publishFileWithGitlabCommit
 }

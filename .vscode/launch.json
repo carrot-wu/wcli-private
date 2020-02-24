@@ -13,7 +13,7 @@
       "protocol": "inspector",
       "cwd": "C:/Users/carrot-wu/Desktop/blog-admin",
       "runtimeExecutable": "node",
-      "args": ["${workspaceRoot}/dist/src/main.js", "publish"],
+      "args": ["${workspaceRoot}/dist/main.js", "publish"],
       "restart": true,
 
     }
