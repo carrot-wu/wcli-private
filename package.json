@@ -34,6 +34,7 @@
     "chalk": "^3.0.0",
     "colors": "^1.4.0",
     "commander": "^4.1.1",
+    "compressing": "^1.5.0",
     "download-git-repo": "^3.0.2",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.4",

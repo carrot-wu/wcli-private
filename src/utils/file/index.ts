@@ -2,6 +2,7 @@
 import { resolve } from 'path';
 import { existsSync, readJsonSync } from 'fs-extra'
 
+const wcliSourcePath = resolve(__dirname, '../../../')
 // wcli package。json
 const packageJson = readJsonSync(resolve(__dirname, '../../../package.json'))
 // 当前执行命令所在目录
@@ -21,12 +22,13 @@ const currentPackageJsonPath = getCurrentBinFilePath('./package.json')
 const currentWcliConfig = existsSync(currentWcliConfigPath) ? require(currentWcliConfigPath) : null
 // 执行命令项目packeage.json
 // eslint-disable-next-line
-const currentPackageJson = existsSync(currentPackageJsonPath) ? require(currentWcliConfigPath) : {}
+const currentPackageJson = existsSync(currentPackageJsonPath) ? require(currentPackageJsonPath) : {}
 
 export {
   currentBinPath,
   currentWcliConfig,
   currentPackageJson,
   packageJson,
+  wcliSourcePath,
   getCurrentBinFilePath
 }

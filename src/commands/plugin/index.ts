@@ -1,6 +1,7 @@
 import pluginInstall from './install'
 import pluginRemove from './remove'
 import pluginUpgrade from './upgrade'
+import listPlugin from './list'
 import { PluginCommand } from './types';
 import throwHandleError from '../../utils/errorHandler/error';
 
@@ -8,9 +9,9 @@ interface Options {
   npm: boolean;
 }
 
-function pluginCommand(command: PluginCommand, pluginName: string, options: Options) {
-  if (!(command && pluginName)) {
-    throwHandleError('请输入正确的指令')
+function pluginCommand(command: PluginCommand, pluginName?: string, options?: Options): void | Promise<string> {
+  if (command !== 'list' && !pluginName) {
+    throwHandleError('请填写需要操作的插件名')
   }
   const { npm: isNpm } = options
   let unCatchableCommand: never
@@ -20,10 +21,12 @@ function pluginCommand(command: PluginCommand, pluginName: string, options: Opti
     case 'remove':
       return pluginRemove(pluginName);
     case 'upgrade':
-      return pluginUpgrade(pluginName, isNpm);
+      return pluginUpgrade(pluginName);
+    case 'list':
+      return listPlugin();
     default:
       unCatchableCommand = command
-      throwHandleError(`请检查plugin [${unCatchableCommand} 已经在wcli进行注册]`)
+      throwHandleError(`命令plugin [${unCatchableCommand}] 未在wcli进行注册`)
       return unCatchableCommand
   }
 }

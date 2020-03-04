@@ -1,13 +1,47 @@
-import { resolve } from 'path'
+import { resolve, normalize } from 'path'
 import * as fse from 'fs-extra'
+import * as compressing from 'compressing'
 import { execSync } from 'child_process'
 import { isArray } from '../../utils/checktype';
 import { getPluginPathWithPluginName } from '../../utils/getPluginFile';
 import throwHandleError from '../../utils/errorHandler/error';
 import { loading, success } from '../../utils/log';
+import { wcliSourcePath } from '../../utils/file';
 import autoPackageJsonInstall from '../../utils/autoPackageJsonInstall';
+import { PluginCacheJson } from './types';
 
 import download = require('download-git-repo');
+interface WritePluginCacheParams {
+  isNpm: boolean;
+  pluginName: string;
+  pluginPath: string;
+  args: string;
+}
+// 插件插件完成时保存相对应的缓存
+export function writePluginCache(params: WritePluginCacheParams): void {
+  const { pluginName, pluginPath } = params
+  // 获取缓存的json文件
+  const pluginCachePath = resolve(wcliSourcePath, './plugins/cache.json')
+  const { version } = fse.readJsonSync(resolve(pluginPath, './package.json'))
+  // 获取插件的版本号
+  let writeCacheObj: PluginCacheJson = {
+    [pluginName]: {
+      ...params,
+      pluginPath: normalize(pluginPath).replace(/\\/g, '/'),
+      version
+    }
+  }
+  if (fse.existsSync(pluginCachePath)) {
+    const oldPluginCacheJson: PluginCacheJson = fse.readJsonSync(pluginCachePath)
+    writeCacheObj = {
+      ...oldPluginCacheJson,
+      ...writeCacheObj
+    }
+  } else {
+    fse.ensureFileSync(pluginCachePath)
+  }
+  fse.writeJSONSync(pluginCachePath, writeCacheObj)
+}
 
 // 根据git的地址获取实际的插件名字
 function getPluginNameByPluginGitPath(pluginGitPath: string): string {
@@ -74,20 +108,31 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
     await downloadPluginByPath(downloadPath, downloadPluginPath)
     success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`)
     autoPackageJsonInstall(downloadPluginPath, 'yarn')
-    success(`插件[${pluginName}]安装成功，你可以在项目中使用该插件！`)
+    success(`插件依赖[${pluginName}]安装成功，你可以在项目中使用该插件！`)
+    // 写入缓存
+    writePluginCache({
+      pluginName,
+      isNpm: false,
+      args: pluginGitPath,
+      pluginPath: downloadPluginPath
+    })
     return downloadPluginPath
   } catch (e) {
     throwHandleError(e.message)
   }
 }
 
-// todo
-export async function installPluginByNpm(npmName: string) {
+/**
+ * 用npm包的形式下载插件
+ * @param {string} npmName 包的名字
+ * @returns {Promise<string>}
+ */
+export async function installPluginByNpm(npmName: string): Promise<string> {
   // 首先检测当前npm包是否存在
   try {
     execSync(`npm info ${npmName}`)
   } catch (e) {
-    throwHandleError(`包${npmName.bold}不存在与npm registry中！`)
+    throwHandleError(`npm registry中查找不到相对应的插件：${npmName.bold}`)
   }
   // 先检查插件是否已经安装了
   if (getPluginPathWithPluginName(npmName)) {
@@ -98,13 +143,31 @@ export async function installPluginByNpm(npmName: string) {
   // 安装插件的地址
   const pluginsDirectionPath = resolve(__dirname, '../../../plugins')
   const downloadPluginPath = resolve(pluginsDirectionPath, npmName)
-  // 插件下载前先创建目录结构
-  await fse.ensureDir(downloadPluginPath)
+  const templatePluginPath = resolve(pluginsDirectionPath, '__TEMPLATE__')
+  // 插件下载前先创建目录结构以及一个临时目录
+  await Promise.all([fse.ensureDir(downloadPluginPath), fse.ensureDir(templatePluginPath)])
   try {
-    await downloadPluginByPath(downloadPath, downloadPluginPath)
-    success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`)
+    // 下载npm的压缩文件夹
+    execSync(`npm pack ${npmName}`, { cwd: templatePluginPath, stdio: 'inherit' })
+    const fileNameArray = await fse.readdir(templatePluginPath)
+    const downloadPluginTgz = fileNameArray.find((fileName) => fileName.includes('.tgz'))
+    const downloadPluginTgzPath = resolve(templatePluginPath, downloadPluginTgz)
+    // 对.tgz的压缩文件进行解压
+    await compressing.tgz.uncompress(downloadPluginTgzPath, templatePluginPath)
+    // 把文件移动出package
+    const downloadPluginPackagePath = resolve(templatePluginPath, './package')
+    await fse.move(downloadPluginPackagePath, downloadPluginPath, { overwrite: true })
+    // 删除临时文件夹
+    await fse.remove(templatePluginPath)
     autoPackageJsonInstall(downloadPluginPath, 'yarn')
-    success(`插件[${pluginName}]安装成功，你可以在项目中使用该插件！`)
+    success(`插件[${npmName}]安装成功，你可以在项目中使用该插件！`)
+    // 写入缓存
+    writePluginCache({
+      pluginName: npmName,
+      isNpm: true,
+      args: npmName,
+      pluginPath: downloadPluginPath
+    })
     return downloadPluginPath
   } catch (e) {
     throwHandleError(e.message)
