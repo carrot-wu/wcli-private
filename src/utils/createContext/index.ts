@@ -6,13 +6,15 @@ import { currentBinPath, getCurrentBinFilePath } from '../file';
 import { publishFileWithGitlabCommit } from '../../commands/publish/gitlab'
 import publishFileWithGit from '../../commands/publish/publishWithGit';
 
-// 传参给插件的context参数
-interface ExtraParams {
+// 传参给publish插件的context参数
+interface PublishExtraParams {
   debug: boolean;
   wcliConfigJson: WCliConfigJson;
   publishToken?: string;
   publishCommitMsg: string;
 }
+// 传参给dev插件的context参数
+type DevExtraParams = Omit<PublishExtraParams, 'publishToken' | 'publishCommitMsg'>
 
 interface PublishContext {
   config: {
@@ -36,8 +38,25 @@ interface PublishContext {
   };
 }
 
-export function createPublishContext(extarParam: ExtraParams): PublishContext {
-  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = extarParam
+interface DevContext {
+  config: {
+    isDebug: boolean;
+    wcliConfigJson: WCliConfigJson;
+  };
+  paths: {
+    currentBinPath: string;
+  };
+  utils: {
+    getCurrentBinFilePath: (...paths: string[]) => string;
+  };
+  toolsModules: {
+    prompt: PromptModule;
+    axios: AxiosStatic;
+    fse: typeof fse;
+  };
+}
+export function createPublishContext(publishExtarParam: PublishExtraParams): PublishContext {
+  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtarParam
   return {
     config: {
       wcliConfigJson,
@@ -52,6 +71,27 @@ export function createPublishContext(extarParam: ExtraParams): PublishContext {
       getCurrentBinFilePath,
       publishFileWithGitlabCommit,
       publishFileWithGit
+    },
+    toolsModules: {
+      prompt,
+      axios,
+      fse
+    }
+  }
+}
+
+export function createDevContext(devExtarParam: DevExtraParams): DevContext {
+  const { wcliConfigJson, debug } = devExtarParam
+  return {
+    config: {
+      wcliConfigJson,
+      isDebug: debug
+    },
+    paths: {
+      currentBinPath
+    },
+    utils: {
+      getCurrentBinFilePath
     },
     toolsModules: {
       prompt,

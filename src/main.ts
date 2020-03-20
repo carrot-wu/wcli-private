@@ -4,6 +4,7 @@ import 'colors'
 import { packageJson } from './utils/file'
 import publishCommand from './commands/publish';
 import pluginCommand from './commands/plugin';
+import devCommand from './commands/dev';
 import errorHandler from './utils/errorHandler/index';
 
 const { version, name } = packageJson
@@ -23,7 +24,7 @@ localCommander
   .command('dev [host]')
   .option('-d, --debug', 'Starting the development server'.green)
   .description(`${'[development]'.blue}${'开启本地开发模式'.yellow}`)
-
+  .action(errorHandler(devCommand))
 // 发布模式指令
 localCommander
   .command('publish')
