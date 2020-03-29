@@ -6,7 +6,9 @@ require("colors");
 const file_1 = require("./utils/file");
 const publish_1 = require("./commands/publish");
 const plugin_1 = require("./commands/plugin");
+const dev_1 = require("./commands/dev");
 const index_1 = require("./utils/errorHandler/index");
+const banner_1 = require("./constants/banner");
 const { version, name } = file_1.packageJson;
 // 注册本地指令
 const localCommander = new commander.Command('wcli');
@@ -14,13 +16,14 @@ const localCommander = new commander.Command('wcli');
 localCommander
     .version(version, '-v, -V, --version')
     .name(name.blue)
-    .usage('[Commands] or wcli [Options]'.blue);
+    .usage(banner_1.default);
 // 注册指令
 // 开发模式指令
 localCommander
     .command('dev [host]')
     .option('-d, --debug', 'Starting the development server'.green)
-    .description(`${'[development]'.blue}${'开启本地开发模式'.yellow}`);
+    .description(`${'[development]'.blue}${'开启本地开发模式'.yellow}`)
+    .action(index_1.default(dev_1.default));
 // 发布模式指令
 localCommander
     .command('publish')

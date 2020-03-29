@@ -6,6 +6,7 @@ import publishCommand from './commands/publish';
 import pluginCommand from './commands/plugin';
 import devCommand from './commands/dev';
 import errorHandler from './utils/errorHandler/index';
+import iconBanner from './constants/banner';
 
 const { version, name } = packageJson
 // 注册本地指令
@@ -15,7 +16,7 @@ const localCommander = new commander.Command('wcli');
 localCommander
   .version(version, '-v, -V, --version')
   .name(name.blue)
-  .usage('[Commands] or wcli [Options]'.blue)
+  .usage(iconBanner)
 
 // 注册指令
 
