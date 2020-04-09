@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"src/","sources":["commands/plugin/install/index.ts"],"names":[],"mappings":";;AAAA,oCAAmE;AAEnE,MAAM,aAAa,GAAG,CAAC,mBAA2B,EAAE,KAAK,GAAG,KAAK,EAAE,EAAE;IACnE,IAAI,KAAK,EAAE;QACT,gBAAgB;QAChB,OAAO,0BAAkB,CAAC,mBAAmB,CAAC,CAAA;KAC/C;IACD,eAAe;IACf,OAAO,2BAAmB,CAAC,mBAAmB,CAAC,CAAA;AACjD,CAAC,CAAA;AAED,kBAAe,aAAa,CAAA"}

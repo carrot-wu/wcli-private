@@ -6,7 +6,7 @@ import throwHandleError from '../../../../utils/errorHandler/error';
 import { loading, success } from '../../../../utils/log';
 
 export default async function createNewPlugin(): Promise<void> {
-  const pluginTemplatePath = resolve(wcliSourcePath, 'src/template/defaultPluginTemplate')
+  const pluginTemplatePath = resolve(wcliSourcePath, 'template/defaultPluginTemplate')
   const promptInputMsg = {
     type: 'input',
     message: '请输入要开发的新插件名称',
