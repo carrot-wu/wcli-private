@@ -1,0 +1,11 @@
+{
+  "name": "default-wcli-plugin-template",
+  "version": "1.0.0",
+  "description": "write your plugin description",
+  "main": "dev.js",
+  "keywords": [
+    "wcli plugin"
+  ],
+  "author": "write your name",
+  "license": "MIT"
+}
