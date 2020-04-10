@@ -6,6 +6,7 @@ import { packageJson } from '@utils/file'
 import publishCommand from './commands/publish';
 import pluginCommand from './commands/plugin';
 import devCommand from './commands/dev';
+import buildCommand from './commands/build';
 import errorHandler from './utils/errorHandler/index';
 import iconBanner from './constants/banner';
 
@@ -27,11 +28,18 @@ localCommander
   .option('-d, --debug', 'Starting the development server'.green)
   .description(`${'[development]'.blue}${'开启本地开发模式'.yellow}`)
   .action(errorHandler(devCommand))
+
+// 打包模式指令
+localCommander
+  .command('build')
+  .option('-d, --debug', 'Building the static file to with extra params'.green)
+  .description(`${'[build]'.blue}${'根据wclicongfig.json的配置执行相应的打包命令'.yellow}`)
+  .action(errorHandler(buildCommand))
 // 发布模式指令
 localCommander
   .command('publish')
   .option('-d, --debug', 'Publishing the static file to deploy'.green)
-  .description(`${'[publish]'.blue}${'打包发布项目到wclicongfig,json下的制定仓库'.yellow}`)
+  .description(`${'[publish]'.blue}${'打包发布项目到wclicongfig.json下的制定仓库'.yellow}`)
   .action(errorHandler(publishCommand))
 
 // 插件相关指令

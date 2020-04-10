@@ -1,5 +1,5 @@
-type InfoKey = 'success' | 'error' | 'loading' | 'info' |'warn'
-type InfoColor = 'green' | 'red' | 'blue' | 'yellow'
+type InfoKey = 'success' | 'error' | 'loading' | 'info' |'warn' | 'log'
+type InfoColor = 'green' | 'red' | 'blue' | 'yellow' | 'white'
 type InfoBgColor = 'bgGreen' | 'bgRed' | 'bgBlue' | 'bgYellow'
 type InfoMap = {
   [K in InfoKey]: {
@@ -34,6 +34,11 @@ const infoMap: InfoMap = {
     color: 'yellow',
     bgColor: 'bgYellow'
   },
+  log: {
+    text: 'log',
+    color: 'white',
+    bgColor: 'bgGreen'
+  },
 }
 
 function logWithColor(type: InfoKey): ((text: string) => void) {
@@ -48,3 +53,4 @@ export const error = logWithColor('error')
 export const loading = logWithColor('loading')
 export const info = logWithColor('info')
 export const warn = logWithColor('warn')
+export const log = logWithColor('log')

@@ -4,6 +4,7 @@ import * as fse from 'fs-extra'
 import { WCliConfigJson } from '@srcTypes/configJsonType';
 import { publishFileWithGitlabCommit } from '@commands/publish/gitlab'
 import publishFileWithGit from '@commands/publish/publishWithGit';
+import * as logTools from '@utils/log'
 import { currentBinPath, getCurrentBinFilePath } from '../file';
 
 // 传参给publish插件的context参数
@@ -30,6 +31,7 @@ interface PublishContext {
     getCurrentBinFilePath: (...paths: string[]) => string;
     publishFileWithGitlabCommit: typeof publishFileWithGitlabCommit;
     publishFileWithGit: typeof publishFileWithGit;
+    logTools: typeof logTools;
   };
   toolsModules: {
     prompt: PromptModule;
@@ -48,6 +50,7 @@ interface DevContext {
   };
   utils: {
     getCurrentBinFilePath: (...paths: string[]) => string;
+    logTools: typeof logTools;
   };
   toolsModules: {
     prompt: PromptModule;
@@ -55,8 +58,8 @@ interface DevContext {
     fse: typeof fse;
   };
 }
-export function createPublishContext(publishExtarParam: PublishExtraParams): PublishContext {
-  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtarParam
+export function createPublishContext(publishExtraParam: PublishExtraParams): PublishContext {
+  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtraParam
   return {
     config: {
       wcliConfigJson,
@@ -70,7 +73,8 @@ export function createPublishContext(publishExtarParam: PublishExtraParams): Pub
     utils: {
       getCurrentBinFilePath,
       publishFileWithGitlabCommit,
-      publishFileWithGit
+      publishFileWithGit,
+      logTools
     },
     toolsModules: {
       prompt,
@@ -80,8 +84,8 @@ export function createPublishContext(publishExtarParam: PublishExtraParams): Pub
   }
 }
 
-export function createDevContext(devExtarParam: DevExtraParams): DevContext {
-  const { wcliConfigJson, debug } = devExtarParam
+export function createDevContext(devExtraParam: DevExtraParams): DevContext {
+  const { wcliConfigJson, debug } = devExtraParam
   return {
     config: {
       wcliConfigJson,
@@ -91,7 +95,30 @@ export function createDevContext(devExtarParam: DevExtraParams): DevContext {
       currentBinPath
     },
     utils: {
-      getCurrentBinFilePath
+      getCurrentBinFilePath,
+      logTools
+    },
+    toolsModules: {
+      prompt,
+      axios,
+      fse
+    }
+  }
+}
+
+export function createBuildContext(buildExtraParam: DevExtraParams): DevContext {
+  const { wcliConfigJson, debug } = buildExtraParam
+  return {
+    config: {
+      wcliConfigJson,
+      isDebug: debug
+    },
+    paths: {
+      currentBinPath
+    },
+    utils: {
+      getCurrentBinFilePath,
+      logTools
     },
     toolsModules: {
       prompt,
