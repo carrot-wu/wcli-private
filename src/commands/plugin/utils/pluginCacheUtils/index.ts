@@ -1,6 +1,6 @@
 import { normalize, resolve } from 'path';
 import * as fse from 'fs-extra';
-import { wcliSourcePath } from '../../../../utils/file';
+import { wcliSourcePath } from '@utils/file';
 import { PluginCacheJson } from '../../types';
 
 interface WritePluginCacheParams {

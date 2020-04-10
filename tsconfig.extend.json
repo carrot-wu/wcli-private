@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@srcTypes/*": ["src/types/*"],
+      "@constants/*": ["src/constants/*"],
+      "@commands/*": ["src/commands/*"],
+      "@utils/*": ["src/utils/*"]
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import { prompt, PromptModule } from 'inquirer'
 import axios, { AxiosStatic } from 'axios'
 import * as fse from 'fs-extra'
-import { WCliConfigJson } from '../../types/configJsonType';
+import { WCliConfigJson } from '@srcTypes/configJsonType';
+import { publishFileWithGitlabCommit } from '@commands/publish/gitlab'
+import publishFileWithGit from '@commands/publish/publishWithGit';
 import { currentBinPath, getCurrentBinFilePath } from '../file';
-import { publishFileWithGitlabCommit } from '../../commands/publish/gitlab'
-import publishFileWithGit from '../../commands/publish/publishWithGit';
 
 // 传参给publish插件的context参数
 interface PublishExtraParams {

@@ -1,6 +1,6 @@
 import * as fse from 'fs-extra'
-import { getPluginPathWithPluginName } from '../../../utils/getPluginFile';
-import throwHandleError from '../../../utils/errorHandler/error';
+import { getPluginPathWithPluginName } from '@utils/getPluginFile';
+import throwHandleError from '@utils/errorHandler/error';
 import { PluginCacheJson } from '../types';
 
 // 展示已安装的插件列表

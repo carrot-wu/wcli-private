@@ -1,10 +1,10 @@
-import { WCliConfigJson } from '../../types/configJsonType'
-import { currentWcliConfig } from '../../utils/file'
-import throwHandleError from '../../utils/errorHandler/error'
-import { formatWCliConfigJson } from '../../utils/format'
-import { getPluginFileByName } from '../../utils/getPluginFile'
-import { isFunction } from '../../utils/checktype'
-import { createPublishContext } from '../../utils/createContext'
+import { WCliConfigJson } from '@srcTypes/configJsonType'
+import { currentWcliConfig } from '@utils/file'
+import throwHandleError from '@utils/errorHandler/error'
+import { formatWCliConfigJson } from '@utils/format'
+import { getPluginFileByName } from '@utils/getPluginFile'
+import { isFunction } from '@utils/checktype'
+import { createPublishContext } from '@utils/createContext'
 import { getPublishGitToken } from './utils';
 import { getCommitMessage } from './gitlab';
 

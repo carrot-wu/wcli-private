@@ -1,9 +1,9 @@
 import { prompt } from 'inquirer'
 import { writeJSON } from 'fs-extra';
 import * as path from 'path'
-import { WCliConfigJson } from '../../types/configJsonType'
-import throwHandleError from '../../utils/errorHandler/error';
-import { ADD_NEW_TOKEN, defaultTokenConfigArray, NOT_NEED_TOKEN } from '../../constants/token';
+import { WCliConfigJson } from '@srcTypes/configJsonType'
+import throwHandleError from '@utils/errorHandler/error';
+import { ADD_NEW_TOKEN, defaultTokenConfigArray, NOT_NEED_TOKEN } from '@constants/token';
 import getTokenCacheConfig from './getPublishTokenConfigJson';
 
 const configJson = getTokenCacheConfig()

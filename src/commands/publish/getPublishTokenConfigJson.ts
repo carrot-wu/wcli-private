@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fse from 'fs-extra'
-import throwHandleError from '../../utils/errorHandler/error';
+import throwHandleError from '@utils/errorHandler/error';
 
 interface CacheConfigJson {
   pluginCacheToken: {

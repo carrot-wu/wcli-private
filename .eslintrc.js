@@ -4,7 +4,7 @@ module.exports = {
   'plugins': ['@typescript-eslint'],//定义了该eslint文件所依赖的插件
   'env': {                          //指定代码的运行环境
     'browser': true,
-    'node': true,
+    'node': true
   },
   'rules': {
     //缩进双空格
@@ -32,14 +32,19 @@ module.exports = {
     'comma-dangle': ['error', 'only-multiline'],
     'consistent-return': 0,
     // 允许使用++
-    'no-plusplus': 0
+    'no-plusplus': 0,
+    'linebreak-style': ["off", "windows"]
   },
   'settings': {
     //解决路径引用ts文件报错的问题
     'import/resolver': {
       'node': {
-        'extensions': ['.js', '.jsx', '.ts', '.tsx'],
+        'extensions': ['.js', '.jsx', '.ts', '.tsx']
       },
-    },
+      // 解决tsconfig下的path别名导致eslint插件无法解决的bug
+      'typescript': {
+        'alwaysTryTypes': true
+      }
+    }
   },
 }

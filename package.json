@@ -17,11 +17,13 @@
     "@types/commander": "^2.12.2",
     "@types/fs-extra": "^8.0.1",
     "@types/inquirer": "^6.5.0",
+    "@types/module-alias": "^2.0.0",
     "@types/node": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.20.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.5"
@@ -34,6 +36,13 @@
     "download-git-repo": "^3.0.2",
     "fs-extra": "^8.1.0",
     "inquirer": "^7.0.4",
+    "module-alias": "^2.2.2",
     "simple-git": "^1.131.0"
+  },
+  "_moduleAliases": {
+    "@utils": "dist/utils",
+    "@srcTypes": "dist/srcTypes",
+    "@constants": "dist/constants",
+    "@commands": "dist/commands"
   }
 }

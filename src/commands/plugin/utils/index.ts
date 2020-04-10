@@ -2,11 +2,12 @@ import { resolve } from 'path'
 import * as fse from 'fs-extra'
 import * as compressing from 'compressing'
 import { execSync } from 'child_process'
-import { isArray } from '../../../utils/checktype';
-import { getPluginPathWithPluginName } from '../../../utils/getPluginFile';
-import throwHandleError from '../../../utils/errorHandler/error';
-import { loading, success } from '../../../utils/log';
-import autoPackageJsonInstall from '../../../utils/autoPackageJsonInstall';
+import { isArray } from '@utils/checktype';
+import { getPluginPathWithPluginName } from '@utils/getPluginFile';
+import throwHandleError from '@utils/errorHandler/error';
+import { loading, success } from '@utils/log';
+import autoPackageJsonInstall from '@utils/autoPackageJsonInstall';
+import { wcliSourcePath } from '@utils/file';
 import { writePluginCache } from './pluginCacheUtils';
 
 import download = require('download-git-repo');
@@ -68,7 +69,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   // 未安装 安装插件
   loading(`下载插件[${pluginName}]中，请耐心等候...`)
   // 安装插件的地址
-  const pluginsDirectionPath = resolve(__dirname, '../../../plugins')
+  const pluginsDirectionPath = resolve(wcliSourcePath, 'plugins')
   const downloadPluginPath = resolve(pluginsDirectionPath, pluginName)
   // 插件下载前先创建目录结构
   await fse.ensureDir(downloadPluginPath)
@@ -109,7 +110,7 @@ export async function installPluginByNpm(npmName: string): Promise<string> {
   // 未安装 安装插件
   loading(`下载插件[${npmName}]中，请耐心等候...`)
   // 安装插件的地址
-  const pluginsDirectionPath = resolve(__dirname, '../../../plugins')
+  const pluginsDirectionPath = resolve(wcliSourcePath, 'plugins')
   const downloadPluginPath = resolve(pluginsDirectionPath, npmName)
   const templatePluginPath = resolve(pluginsDirectionPath, '__TEMPLATE__')
   // 插件下载前先创建目录结构以及一个临时目录

@@ -1,6 +1,6 @@
 import { resolve } from 'path'
 import { existsSync } from 'fs'
-import { WCliConfigJson } from '../../types/configJsonType';
+import { WCliConfigJson } from '@srcTypes/configJsonType';
 import throwHandleError from '../errorHandler/error';
 import { isArray } from '../checktype';
 import autoPackageJsonInstall from '../autoPackageJsonInstall';

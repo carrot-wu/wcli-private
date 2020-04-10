@@ -1,12 +1,12 @@
 import * as simpleGit from 'simple-git/promise';
 import * as fse from 'fs-extra'
 import * as path from 'path'
-import { PublishConfig } from '../../../types/publishConfig';
+import { PublishConfig } from '@srcTypes/publishConfig';
+import { getCurrentBinFilePath } from '@utils/file';
+import throwHandleError from '@utils/errorHandler/error';
+import * as log from '@utils/log';
 import { publishFileWithGitlabCommit } from '../gitlab';
-import throwHandleError from '../../../utils/errorHandler/error';
 import { checkPathIsGitDir } from './utils';
-import { getCurrentBinFilePath } from '../../../utils/file';
-import * as log from '../../../utils/log';
 
 interface PublishFileWithGitParams {
   publishConfig: PublishConfig;

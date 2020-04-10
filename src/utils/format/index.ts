@@ -1,7 +1,7 @@
-import { WCliConfigJson } from '../../types/configJsonType'
+import { WCliConfigJson } from '@srcTypes/configJsonType'
+import { defaultWCliConfigJson } from '@constants/index'
 import { isPlainObject } from '../checktype'
 import throwHandleError from '../errorHandler/error'
-import { defaultWCliConfigJson } from '../../constants'
 
 // 初始化wcliconfig.json文件 不合法的话直接抛出错误
 // eslint-disable-next-line consistent-return

@@ -1,7 +1,8 @@
 #! /usr/bin/env node
-import * as commander from 'commander';
+import 'module-alias/register'
 import 'colors'
-import { packageJson } from './utils/file'
+import * as commander from 'commander';
+import { packageJson } from '@utils/file'
 import publishCommand from './commands/publish';
 import pluginCommand from './commands/plugin';
 import devCommand from './commands/dev';

@@ -1,10 +1,10 @@
+import throwHandleError from '@utils/errorHandler/error';
 import pluginInstall from './install'
 import pluginRemove from './remove'
 import pluginUpgrade from './upgrade'
 import listPlugin from './list'
 import initNewPlugin from './init'
 import { PluginCommand } from './types';
-import throwHandleError from '../../utils/errorHandler/error';
 
 interface Options {
   npm: boolean;

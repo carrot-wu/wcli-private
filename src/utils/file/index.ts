@@ -4,7 +4,7 @@ import { existsSync, readJsonSync } from 'fs-extra'
 
 const wcliSourcePath = resolve(__dirname, '../../../')
 // wcli package。json
-const packageJson = readJsonSync(resolve(__dirname, '../../../package.json'))
+const packageJson = readJsonSync(resolve(wcliSourcePath, 'package.json'))
 // 当前执行命令所在目录
 const currentBinPath: string = process.cwd()
 

@@ -9,7 +9,7 @@
 /plugins
 # 模板目录
 /template
-# 源码目录
+# 源码
 /dist
 
 # 缓存的token

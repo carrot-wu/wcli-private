@@ -1,13 +1,13 @@
 import * as path from 'path'
 import * as fse from 'fs-extra'
 import axios from 'axios'
-import { getPublishCommitApi, getSingleBranch } from './api';
-import { directorWalker } from '../../../utils/file/directorWalker';
-import { getCurrentBinFilePath } from '../../../utils/file';
+import { directorWalker } from '@utils/file/directorWalker';
+import { getCurrentBinFilePath } from '@utils/file';
+import { checkIsTextFile } from '@utils/file/checkFileIsText';
+import * as log from '@utils/log'
+import { PublishConfig } from '@srcTypes/publishConfig';
 import { getBranchFileTree } from './utils';
-import { checkIsTextFile } from '../../../utils/file/checkFileIsText';
-import * as log from '../../../utils/log'
-import { PublishConfig } from '../../../types/publishConfig';
+import { getPublishCommitApi, getSingleBranch } from './api';
 
 
 interface GetCommitIdData {
