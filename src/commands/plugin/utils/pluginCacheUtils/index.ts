@@ -1,6 +1,7 @@
 import { normalize, resolve } from 'path';
 import * as fse from 'fs-extra';
 import { wcliSourcePath } from '@utils/file';
+import throwHandleError from '@utils/errorHandler/error';
 import { PluginCacheJson } from '../../types';
 
 interface WritePluginCacheParams {
@@ -37,5 +38,15 @@ export function writePluginCache(params: WritePluginCacheParams): void {
 
 // 获取插件缓存
 export function getPluginCacheByName(pluginName: string) {
-  // todo
+  // 获取缓存的json文件
+  const pluginCachePath = resolve(wcliSourcePath, './plugins/cache.json')
+  if (!fse.existsSync(pluginCachePath)) {
+    throwHandleError('找不到插件缓存文件cache.json，请重新安装！')
+  }
+  const pluginCacheJson: PluginCacheJson = fse.readJsonSync(pluginCachePath)
+  if (!pluginCacheJson[pluginName]) {
+    // 找不到插件名
+    throwHandleError('插件缓存中找不到插件名称，请重新安装！')
+  }
+  return pluginCacheJson[pluginName]
 }

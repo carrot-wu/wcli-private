@@ -7,6 +7,7 @@ import publishCommand from './commands/publish';
 import pluginCommand from './commands/plugin';
 import devCommand from './commands/dev';
 import buildCommand from './commands/build';
+import upgradeCommand from './commands/upgrade';
 import errorHandler from './utils/errorHandler/index';
 import iconBanner from './constants/banner';
 
@@ -48,6 +49,13 @@ localCommander
   .option('-n, --npm', '通过npm包名的形式下载插件'.green)
   .description(`${'[plugin] [command]'.blue}${'新增，更新，删除等一系列插件操作方法'.yellow}`)
   .action(errorHandler(pluginCommand))
+
+// wcli升级指令
+localCommander
+  .command('upgrade')
+  .option('-r, --rebase', '通过merge的形式更新wcli'.green)
+  .description(`${'[upgrade]'.blue}${'手动更新wcli脚手架'.yellow}`)
+  .action(errorHandler(upgradeCommand))
 
 
 localCommander.parse(process.argv);
