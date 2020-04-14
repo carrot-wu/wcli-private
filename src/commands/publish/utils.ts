@@ -1,4 +1,4 @@
-import { prompt } from "inquirer"
+import { prompt } from "enquirer"
 import { writeJSON } from "fs-extra";
 import * as path from "path"
 import { WCliConfigJson } from "@srcTypes/configJsonType"
@@ -25,7 +25,7 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
     ? "初次发布私有项目需要使用发布仓库的token才能进行验证提交，您也可以选择使用其他插件的token进行提交"
     : "初次发布私有项目需要使用发布仓库的token才能进行验证提交"
   const promptSelectToken = {
-    type: "list",
+    type: "select",
     message,
     name: "token",
     choices

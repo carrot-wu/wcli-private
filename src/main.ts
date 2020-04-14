@@ -25,7 +25,7 @@ localCommander
 
 // 开发模式指令
 localCommander
-  .command("dev [host]")
+  .command("dev")
   .option("-d, --debug", "Starting the development server".green)
   .description(`${"[development]".blue}${"开启本地开发模式".yellow}`)
   .action(errorHandler(devCommand))

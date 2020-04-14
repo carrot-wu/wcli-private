@@ -21,7 +21,6 @@ const devCommand = async (options: Options) => {
   }
   // 获取配置
   const wcliConfigJson: WCliConfigJson = formatWCliConfigJson(currentWcliConfig)
-
   // 获取插件的publish.js文件
   const devFile = getPluginFileByName(wcliConfigJson, DEV_FILE)
 

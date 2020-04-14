@@ -1,4 +1,4 @@
-import { prompt, PromptModule } from "inquirer"
+import { prompt } from "enquirer"
 import axios, { AxiosStatic } from "axios"
 import * as fse from "fs-extra"
 import { WCliConfigJson } from "@srcTypes/configJsonType";
@@ -34,7 +34,7 @@ interface PublishContext {
     logTools: typeof logTools;
   };
   toolsModules: {
-    prompt: PromptModule;
+    prompt: typeof prompt;
     axios: AxiosStatic;
     fse: typeof fse;
   };
@@ -53,7 +53,7 @@ interface DevContext {
     logTools: typeof logTools;
   };
   toolsModules: {
-    prompt: PromptModule;
+    prompt: typeof prompt;
     axios: AxiosStatic;
     fse: typeof fse;
   };

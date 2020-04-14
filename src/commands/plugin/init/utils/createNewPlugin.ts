@@ -1,4 +1,4 @@
-import { prompt } from "inquirer";
+import { prompt } from "enquirer";
 import * as fse from "fs-extra"
 import { resolve } from "path"
 import { currentBinPath, wcliSourcePath } from "@utils/file";

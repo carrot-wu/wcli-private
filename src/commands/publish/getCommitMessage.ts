@@ -1,4 +1,4 @@
-import { prompt } from "inquirer"
+import { prompt } from "enquirer"
 
 /**
  * 获取填写的提交commit message
