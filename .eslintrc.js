@@ -33,7 +33,9 @@ module.exports = {
     "consistent-return": 0,
     // 允许使用++
     "no-plusplus": 0,
-    "linebreak-style": ["off", "windows"]
+    "linebreak-style": ["off", "windows"],
+    // 引号
+    "quotes": [0, "single"]
   },
   "settings": {
     //解决路径引用ts文件报错的问题
