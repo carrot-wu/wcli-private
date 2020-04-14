@@ -26,9 +26,10 @@ yarn global add @carrotwu/wcli
 // 通过npm的方式安装插件
 wcli plugin install XXX-plugin -n
 
-// 通过github或者gitlab的url地址安装插件
-wcli plugin install https://github.com/mrmrs/colors
-
+// 通过github或者gitlab的ssh或者https克隆地址下载插件(连接上带.git的)
+wcli plugin install git@gitlab.xxx.com:xxx.git
+// 或者
+wcli plugin install https://gitlab.xxx.com:xxx.git
 ```
 
 ### wcli plugin init

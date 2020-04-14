@@ -44,7 +44,7 @@ const infoMap: InfoMap = {
 function logWithColor(type: InfoKey): ((text: string) => void) {
   const { text: desc, color, bgColor } = infoMap[type]
   return function (text: string): void {
-    const logText = `[${desc}]`[bgColor] + ` ${text}`[color]
+    const logText = `${desc}`[bgColor] + ` ${text}`[color]
     return console.log(logText)
   }
 }

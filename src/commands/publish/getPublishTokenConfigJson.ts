@@ -8,7 +8,7 @@ interface CacheConfigJson {
   };
 }
 // 缓存路径
-const cacheConfigJsonPath = path.resolve(__dirname, "../../config.json")
+const cacheConfigJsonPath = path.resolve(__dirname, "../../gitlabCache.json")
 
 function getTokenCacheConfig(): CacheConfigJson {
   if (fse.existsSync(cacheConfigJsonPath)) {
@@ -20,7 +20,7 @@ function getTokenCacheConfig(): CacheConfigJson {
     fse.outputJSONSync(cacheConfigJsonPath, { pluginCacheToken: {} })
     return fse.readJsonSync(cacheConfigJsonPath) as CacheConfigJson
   } catch (e) {
-    throwHandleError("创建config.json失败")
+    throwHandleError("创建gitlabCache.json失败")
   }
 }
 

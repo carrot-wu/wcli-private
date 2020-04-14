@@ -65,8 +65,8 @@ async function getPublishGitToken(wCliConfigJson: WCliConfigJson): Promise<strin
   const { plugin } = wCliConfigJson
   const token = await checkPublishGitToken(plugin)
   if (!pluginCacheToken[plugin]) {
-    // config.json没有token用户输入完之后保存到文件当中
-    const configPath = path.resolve(__dirname, "../../config.json")
+    // gitlabCache.json没有token用户输入完之后保存到文件当中
+    const configPath = path.resolve(__dirname, "../../gitlabCache.json")
     const newConfigJson = {
       ...configJson,
       pluginCacheToken: {

@@ -12,6 +12,16 @@ import { writePluginCache } from "./pluginCacheUtils";
 
 import download = require("download-git-repo");
 
+interface DownloadPluginByPathParams {
+  downloadPath: string;
+  downloadPluginPath: string;
+  sshToken?: string;
+}
+
+// 是否是gitlab下载地址
+function isGitlabGit(pluginGitPath: string): boolean {
+  return /gitlab/.test(pluginGitPath)
+}
 // 根据git的地址获取实际的插件名字
 function getPluginNameByPluginGitPath(pluginGitPath: string): string {
   const PluginNameArray: string[] | null = /\/([^/]+)\.git$/.exec(pluginGitPath)
@@ -20,8 +30,6 @@ function getPluginNameByPluginGitPath(pluginGitPath: string): string {
 
 /**
  * promise化下载plugin方法
- * @param {string} path
- * @param {string} downloadPluginPath
  * @returns {Promise<string>}
  */
 function downloadPluginByPath(path: string, downloadPluginPath: string): Promise<string> {
@@ -47,10 +55,10 @@ export function getDownloadGitRepoPath(pluginGitPath: string): string {
   if (/gitlab/.test(pluginGitPath)) {
     const downloadGitLabPathArray: string[] | null = /(?:git@|https:\/\/)(.+)\.git$/.exec(pluginGitPath)
     const downloadGitlabPath = isArray(downloadGitLabPathArray) ? downloadGitLabPathArray[1] : pluginGitPath
-    return `gitlab:${downloadGitlabPath.replace(".com/", ".com:")}`
+    return `https://${downloadGitlabPath.replace(".com/", ".com:")}`
   }
   // 错误 不符合github或者gitlab
-  throwHandleError("请检查插件地址是否正确，插件安装地址目前只支持[github]和[gitlab]")
+  throwHandleError("请检查插件地址是否正确，插件安装地址目前只支持github和gitlab")
 }
 
 /**
@@ -59,6 +67,12 @@ export function getDownloadGitRepoPath(pluginGitPath: string): string {
  * @returns {Promise<string>}
  */
 export async function downloadPluginByGit(pluginGitPath: string): Promise<string> {
+  // 检查插件地址是否正确
+  const isValid = /(?:git@|https:\/\/)(.+)\.git$/.exec(pluginGitPath)
+  if (!isValid) {
+    // 不合法
+    throwHandleError('插件下载地址不合法，只允许以.git为结尾的ssh方式以及https地址下载插件')
+  }
   // 获取插件名称
   const pluginName = getPluginNameByPluginGitPath(pluginGitPath)
   // 先检查插件是否已经安装了
@@ -67,7 +81,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   }
   const downloadPath = getDownloadGitRepoPath(pluginGitPath)
   // 未安装 安装插件
-  loading(`下载插件[${pluginName}]中，请耐心等候...`)
+  loading(`开始下载插件[${pluginName}]，请耐心等候...`)
   // 安装插件的地址
   const pluginsDirectionPath = resolve(wcliSourcePath, "plugins")
   const downloadPluginPath = resolve(pluginsDirectionPath, pluginName)
@@ -75,9 +89,6 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   await fse.ensureDir(downloadPluginPath)
   try {
     await downloadPluginByPath(downloadPath, downloadPluginPath)
-    success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`)
-    autoPackageJsonInstall(downloadPluginPath, "yarn")
-    success(`插件依赖[${pluginName}]安装成功，你可以在项目中使用该插件！`)
     // 写入缓存
     writePluginCache({
       pluginName,
@@ -85,8 +96,14 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
       args: pluginGitPath,
       pluginPath: downloadPluginPath
     })
+    success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`)
+    autoPackageJsonInstall(downloadPluginPath, "yarn")
+    success(`插件依赖[${pluginName}]安装成功，你可以在项目中使用该插件！`)
+
     return downloadPluginPath
   } catch (e) {
+    // 安装失败删除文件夹
+    fse.removeSync(downloadPluginPath)
     throwHandleError(e.message)
   }
 }
