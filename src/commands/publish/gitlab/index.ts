@@ -1,2 +1,2 @@
-export * from '../getCommitMessage';
-export * from './commits'
+export * from "../getCommitMessage";
+export * from "./commits"

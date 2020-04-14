@@ -11,7 +11,7 @@ interface GetSingleBranch {
  */
 function getSingleBranch(projectConfig: GetSingleBranch): string {
   const { git, repository, branch } = projectConfig
-  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/branches/${branch || 'master'}`
+  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/branches/${branch || "master"}`
 }
 
 /**

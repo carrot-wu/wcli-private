@@ -1,4 +1,4 @@
-import createNewPlugin from './utils/createNewPlugin';
+import createNewPlugin from "./utils/createNewPlugin";
 // 初始化一个新插件模板
 
 

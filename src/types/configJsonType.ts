@@ -2,7 +2,7 @@ export interface WCliConfigJson {
   // 当前项目名
   name: string;
   // 项目使用过的包管理工具
-  package?: 'npm' | 'yarn';
+  package?: "npm" | "yarn";
   // 打包的路径
   path?: {
     output?: string;

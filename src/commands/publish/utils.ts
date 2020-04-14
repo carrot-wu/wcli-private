@@ -1,10 +1,10 @@
-import { prompt } from 'inquirer'
-import { writeJSON } from 'fs-extra';
-import * as path from 'path'
-import { WCliConfigJson } from '@srcTypes/configJsonType'
-import throwHandleError from '@utils/errorHandler/error';
-import { ADD_NEW_TOKEN, defaultTokenConfigArray, NOT_NEED_TOKEN } from '@constants/token';
-import getTokenCacheConfig from './getPublishTokenConfigJson';
+import { prompt } from "inquirer"
+import { writeJSON } from "fs-extra";
+import * as path from "path"
+import { WCliConfigJson } from "@srcTypes/configJsonType"
+import throwHandleError from "@utils/errorHandler/error";
+import { ADD_NEW_TOKEN, defaultTokenConfigArray, NOT_NEED_TOKEN } from "@constants/token";
+import getTokenCacheConfig from "./getPublishTokenConfigJson";
 
 const configJson = getTokenCacheConfig()
 
@@ -22,12 +22,12 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
   const hasPluginTokenChoices = hasTokenPluginArray.map((token) => ({ key: token, name: token, value: token }))
   const choices = hasPluginTokenChoices.concat(...defaultTokenConfigArray)
   const message: string = hasPluginTokenChoices.length
-    ? '初次发布私有项目需要使用发布仓库的token才能进行验证提交，您也可以选择使用其他插件的token进行提交'
-    : '初次发布私有项目需要使用发布仓库的token才能进行验证提交'
+    ? "初次发布私有项目需要使用发布仓库的token才能进行验证提交，您也可以选择使用其他插件的token进行提交"
+    : "初次发布私有项目需要使用发布仓库的token才能进行验证提交"
   const promptSelectToken = {
-    type: 'list',
+    type: "list",
     message,
-    name: 'token',
+    name: "token",
     choices
   }
   const { token } = await prompt([promptSelectToken])
@@ -42,17 +42,17 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
   }
   // 重新输入一个token
   const promptInputToken = {
-    type: 'input',
-    message: '请输入发布仓库的token',
-    name: 'newToken',
+    type: "input",
+    message: "请输入发布仓库的token",
+    name: "newToken",
     validate(val: string): boolean | string {
-      const trimVal = val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, '')
+      const trimVal = val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, "")
       if (trimVal) {
         return true
       }
-      return 'token不能为空'
+      return "token不能为空"
     },
-    filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, '')
+    filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, "")
   }
   const { newToken } = await prompt([promptInputToken])
   return newToken
@@ -66,7 +66,7 @@ async function getPublishGitToken(wCliConfigJson: WCliConfigJson): Promise<strin
   const token = await checkPublishGitToken(plugin)
   if (!pluginCacheToken[plugin]) {
     // config.json没有token用户输入完之后保存到文件当中
-    const configPath = path.resolve(__dirname, '../../config.json')
+    const configPath = path.resolve(__dirname, "../../config.json")
     const newConfigJson = {
       ...configJson,
       pluginCacheToken: {
@@ -77,7 +77,7 @@ async function getPublishGitToken(wCliConfigJson: WCliConfigJson): Promise<strin
     try {
       await writeJSON(configPath, newConfigJson)
     } catch (e) {
-      throwHandleError('保存token失败')
+      throwHandleError("保存token失败")
     }
   }
   if (token !== NOT_NEED_TOKEN) return token

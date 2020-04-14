@@ -1,7 +1,7 @@
-import * as fse from 'fs-extra'
-import { getPluginPathWithPluginName } from '@utils/getPluginFile';
-import throwHandleError from '@utils/errorHandler/error';
-import { loading, success } from '@utils/log';
+import * as fse from "fs-extra"
+import { getPluginPathWithPluginName } from "@utils/getPluginFile";
+import throwHandleError from "@utils/errorHandler/error";
+import { loading, success } from "@utils/log";
 
 const pluginRemove = (pluginName: string) => {
   const pluginPath = getPluginPathWithPluginName(pluginName)

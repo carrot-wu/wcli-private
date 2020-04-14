@@ -1,6 +1,6 @@
-type InfoKey = 'success' | 'error' | 'loading' | 'info' |'warn' | 'log'
-type InfoColor = 'green' | 'red' | 'blue' | 'yellow' | 'white'
-type InfoBgColor = 'bgGreen' | 'bgRed' | 'bgBlue' | 'bgYellow'
+type InfoKey = "success" | "error" | "loading" | "info" |"warn" | "log"
+type InfoColor = "green" | "red" | "blue" | "yellow" | "white"
+type InfoBgColor = "bgGreen" | "bgRed" | "bgBlue" | "bgYellow"
 type InfoMap = {
   [K in InfoKey]: {
     text: K;
@@ -10,34 +10,34 @@ type InfoMap = {
 }
 const infoMap: InfoMap = {
   success: {
-    text: 'success',
-    color: 'green',
-    bgColor: 'bgGreen'
+    text: "success",
+    color: "green",
+    bgColor: "bgGreen"
   },
   error: {
-    text: 'error',
-    color: 'red',
-    bgColor: 'bgRed'
+    text: "error",
+    color: "red",
+    bgColor: "bgRed"
   },
   loading: {
-    text: 'loading',
-    color: 'yellow',
-    bgColor: 'bgYellow'
+    text: "loading",
+    color: "yellow",
+    bgColor: "bgYellow"
   },
   info: {
-    text: 'info',
-    color: 'blue',
-    bgColor: 'bgBlue'
+    text: "info",
+    color: "blue",
+    bgColor: "bgBlue"
   },
   warn: {
-    text: 'warn',
-    color: 'yellow',
-    bgColor: 'bgYellow'
+    text: "warn",
+    color: "yellow",
+    bgColor: "bgYellow"
   },
   log: {
-    text: 'log',
-    color: 'white',
-    bgColor: 'bgGreen'
+    text: "log",
+    color: "white",
+    bgColor: "bgGreen"
   },
 }
 
@@ -48,9 +48,9 @@ function logWithColor(type: InfoKey): ((text: string) => void) {
     return console.log(logText)
   }
 }
-export const success = logWithColor('success')
-export const error = logWithColor('error')
-export const loading = logWithColor('loading')
-export const info = logWithColor('info')
-export const warn = logWithColor('warn')
-export const log = logWithColor('log')
+export const success = logWithColor("success")
+export const error = logWithColor("error")
+export const loading = logWithColor("loading")
+export const info = logWithColor("info")
+export const warn = logWithColor("warn")
+export const log = logWithColor("log")

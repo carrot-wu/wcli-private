@@ -1,5 +1,5 @@
-import { SystemError } from './error'
-import * as log from '../log'
+import { SystemError } from "./error"
+import * as log from "../log"
 
 export default function errorHandler(next: (...args: any[]) => any) {
   return async function (...args: any[]): Promise<void> {

@@ -1,4 +1,4 @@
-import * as fse from 'fs-extra'
+import * as fse from "fs-extra"
 
 function fileWalker(path: string, fileList: string[]): void {
   // 文件就直接把路径塞进去

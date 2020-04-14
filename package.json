@@ -1,18 +1,23 @@
 {
-  "name": "wcli",
+  "name": "@carrotwu/wcli",
   "version": "1.0.0",
-  "description": "cli for demo",
+  "description": "A global cli tool that supports custom development, packaging and pushing",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node-dev --respawn --transpileOnly  src/main.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node-dev --respawn --transpileOnly  src/main.ts"
   },
   "bin": {
     "wcli": "./dist/main.js"
   },
+  "keywords": [
+    "ts",
+    "cli",
+    "node",
+    "typescript"
+  ],
   "author": "carrotWu",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/commander": "^2.12.2",
     "@types/fs-extra": "^8.0.1",

@@ -1,1 +1,1 @@
-export type InstallType = 'npm' | 'cnpm' | 'yarn'
+export type InstallType = "npm" | "cnpm" | "yarn"

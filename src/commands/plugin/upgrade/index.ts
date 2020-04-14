@@ -1,9 +1,9 @@
 
-import * as fse from 'fs-extra';
-import { getPluginPathWithPluginName } from '@utils/getPluginFile';
-import throwHandleError from '@utils/errorHandler/error';
-import { getPluginCacheByName } from '@commands/plugin/utils/pluginCacheUtils';
-import pluginInstall from '@commands/plugin/install';
+import * as fse from "fs-extra";
+import { getPluginPathWithPluginName } from "@utils/getPluginFile";
+import throwHandleError from "@utils/errorHandler/error";
+import { getPluginCacheByName } from "@commands/plugin/utils/pluginCacheUtils";
+import pluginInstall from "@commands/plugin/install";
 
 
 // todo 目前暂时是通过删除重新拉取来更新插件 后续需要判断是否需要更新

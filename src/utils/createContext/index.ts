@@ -1,11 +1,11 @@
-import { prompt, PromptModule } from 'inquirer'
-import axios, { AxiosStatic } from 'axios'
-import * as fse from 'fs-extra'
-import { WCliConfigJson } from '@srcTypes/configJsonType';
-import { publishFileWithGitlabCommit } from '@commands/publish/gitlab'
-import publishFileWithGit from '@commands/publish/publishWithGit';
-import * as logTools from '@utils/log'
-import { currentBinPath, getCurrentBinFilePath } from '../file';
+import { prompt, PromptModule } from "inquirer"
+import axios, { AxiosStatic } from "axios"
+import * as fse from "fs-extra"
+import { WCliConfigJson } from "@srcTypes/configJsonType";
+import { publishFileWithGitlabCommit } from "@commands/publish/gitlab"
+import publishFileWithGit from "@commands/publish/publishWithGit";
+import * as logTools from "@utils/log"
+import { currentBinPath, getCurrentBinFilePath } from "../file";
 
 // 传参给publish插件的context参数
 interface PublishExtraParams {
@@ -15,7 +15,7 @@ interface PublishExtraParams {
   publishCommitMsg: string;
 }
 // 传参给dev插件的context参数
-type DevExtraParams = Omit<PublishExtraParams, 'publishToken' | 'publishCommitMsg'>
+type DevExtraParams = Omit<PublishExtraParams, "publishToken" | "publishCommitMsg">
 
 interface PublishContext {
   config: {

@@ -1,4 +1,4 @@
-import { prompt } from 'inquirer'
+import { prompt } from "inquirer"
 
 /**
  * 获取填写的提交commit message
@@ -6,17 +6,17 @@ import { prompt } from 'inquirer'
  */
 export async function getCommitMessage(): Promise<string> {
   const promptInputMsg = {
-    type: 'input',
-    message: '请输入commit message',
-    name: 'commitMsg',
+    type: "input",
+    message: "请输入commit message",
+    name: "commitMsg",
     validate(val: string): boolean | string {
-      const trimVal = val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, '')
+      const trimVal = val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, "")
       if (trimVal) {
         return true
       }
-      return 'commit message不能为空'
+      return "commit message不能为空"
     },
-    filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, '')
+    filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, "")
   }
 
   const { commitMsg } = await prompt([promptInputMsg])

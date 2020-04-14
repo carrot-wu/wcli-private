@@ -1,8 +1,8 @@
-import { normalize, resolve } from 'path';
-import * as fse from 'fs-extra';
-import { wcliSourcePath } from '@utils/file';
-import throwHandleError from '@utils/errorHandler/error';
-import { PluginCacheJson } from '../../types';
+import { normalize, resolve } from "path";
+import * as fse from "fs-extra";
+import { wcliSourcePath } from "@utils/file";
+import throwHandleError from "@utils/errorHandler/error";
+import { PluginCacheJson } from "../../types";
 
 interface WritePluginCacheParams {
   isNpm: boolean;
@@ -14,13 +14,13 @@ interface WritePluginCacheParams {
 export function writePluginCache(params: WritePluginCacheParams): void {
   const { pluginName, pluginPath } = params
   // 获取缓存的json文件
-  const pluginCachePath = resolve(wcliSourcePath, './plugins/cache.json')
-  const { version } = fse.readJsonSync(resolve(pluginPath, './package.json'))
+  const pluginCachePath = resolve(wcliSourcePath, "./plugins/cache.json")
+  const { version } = fse.readJsonSync(resolve(pluginPath, "./package.json"))
   // 获取插件的版本号
   let writeCacheObj: PluginCacheJson = {
     [pluginName]: {
       ...params,
-      pluginPath: normalize(pluginPath).replace(/\\/g, '/'),
+      pluginPath: normalize(pluginPath).replace(/\\/g, "/"),
       version
     }
   }
@@ -39,14 +39,14 @@ export function writePluginCache(params: WritePluginCacheParams): void {
 // 获取插件缓存
 export function getPluginCacheByName(pluginName: string) {
   // 获取缓存的json文件
-  const pluginCachePath = resolve(wcliSourcePath, './plugins/cache.json')
+  const pluginCachePath = resolve(wcliSourcePath, "./plugins/cache.json")
   if (!fse.existsSync(pluginCachePath)) {
-    throwHandleError('找不到插件缓存文件cache.json，请重新安装！')
+    throwHandleError("找不到插件缓存文件cache.json，请重新安装！")
   }
   const pluginCacheJson: PluginCacheJson = fse.readJsonSync(pluginCachePath)
   if (!pluginCacheJson[pluginName]) {
     // 找不到插件名
-    throwHandleError('插件缓存中找不到插件名称，请重新安装！')
+    throwHandleError("插件缓存中找不到插件名称，请重新安装！")
   }
   return pluginCacheJson[pluginName]
 }

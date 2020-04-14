@@ -1,4 +1,4 @@
-import { downloadPluginByGit, installPluginByNpm } from '../utils';
+import { downloadPluginByGit, installPluginByNpm } from "../utils";
 
 const pluginInstall = (pluginNpmNameOrPath: string, isNpm = false) => {
   if (isNpm) {

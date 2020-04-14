@@ -1,10 +1,10 @@
-// declare module '*.json' {
+// declare module "*.json" {
 //     const value: any;
 //     export default value;
 // }
 
 
-declare module 'download-git-repo'{
+declare module "download-git-repo"{
 
   interface Options {
     clone?: boolean;

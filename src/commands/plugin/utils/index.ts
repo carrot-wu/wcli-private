@@ -1,16 +1,16 @@
-import { resolve } from 'path'
-import * as fse from 'fs-extra'
-import * as compressing from 'compressing'
-import { execSync } from 'child_process'
-import { isArray } from '@utils/checktype';
-import { getPluginPathWithPluginName } from '@utils/getPluginFile';
-import throwHandleError from '@utils/errorHandler/error';
-import { loading, success } from '@utils/log';
-import autoPackageJsonInstall from '@utils/autoPackageJsonInstall';
-import { wcliSourcePath } from '@utils/file';
-import { writePluginCache } from './pluginCacheUtils';
+import { resolve } from "path"
+import * as fse from "fs-extra"
+import * as compressing from "compressing"
+import { execSync } from "child_process"
+import { isArray } from "@utils/checktype";
+import { getPluginPathWithPluginName } from "@utils/getPluginFile";
+import throwHandleError from "@utils/errorHandler/error";
+import { loading, success } from "@utils/log";
+import autoPackageJsonInstall from "@utils/autoPackageJsonInstall";
+import { wcliSourcePath } from "@utils/file";
+import { writePluginCache } from "./pluginCacheUtils";
 
-import download = require('download-git-repo');
+import download = require("download-git-repo");
 
 // 根据git的地址获取实际的插件名字
 function getPluginNameByPluginGitPath(pluginGitPath: string): string {
@@ -47,10 +47,10 @@ export function getDownloadGitRepoPath(pluginGitPath: string): string {
   if (/gitlab/.test(pluginGitPath)) {
     const downloadGitLabPathArray: string[] | null = /(?:git@|https:\/\/)(.+)\.git$/.exec(pluginGitPath)
     const downloadGitlabPath = isArray(downloadGitLabPathArray) ? downloadGitLabPathArray[1] : pluginGitPath
-    return `gitlab:${downloadGitlabPath.replace('.com/', '.com:')}`
+    return `gitlab:${downloadGitlabPath.replace(".com/", ".com:")}`
   }
   // 错误 不符合github或者gitlab
-  throwHandleError('请检查插件地址是否正确，插件安装地址目前只支持[github]和[gitlab]')
+  throwHandleError("请检查插件地址是否正确，插件安装地址目前只支持[github]和[gitlab]")
 }
 
 /**
@@ -63,20 +63,20 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   const pluginName = getPluginNameByPluginGitPath(pluginGitPath)
   // 先检查插件是否已经安装了
   if (getPluginPathWithPluginName(pluginName)) {
-    throwHandleError('插件已在plugin目录下存在，请勿重新安装')
+    throwHandleError("插件已在plugin目录下存在，请勿重新安装")
   }
   const downloadPath = getDownloadGitRepoPath(pluginGitPath)
   // 未安装 安装插件
   loading(`下载插件[${pluginName}]中，请耐心等候...`)
   // 安装插件的地址
-  const pluginsDirectionPath = resolve(wcliSourcePath, 'plugins')
+  const pluginsDirectionPath = resolve(wcliSourcePath, "plugins")
   const downloadPluginPath = resolve(pluginsDirectionPath, pluginName)
   // 插件下载前先创建目录结构
   await fse.ensureDir(downloadPluginPath)
   try {
     await downloadPluginByPath(downloadPath, downloadPluginPath)
     success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`)
-    autoPackageJsonInstall(downloadPluginPath, 'yarn')
+    autoPackageJsonInstall(downloadPluginPath, "yarn")
     success(`插件依赖[${pluginName}]安装成功，你可以在项目中使用该插件！`)
     // 写入缓存
     writePluginCache({
@@ -105,30 +105,30 @@ export async function installPluginByNpm(npmName: string): Promise<string> {
   }
   // 先检查插件是否已经安装了
   if (getPluginPathWithPluginName(npmName)) {
-    throwHandleError('插件已在plugin目录下存在，请勿重新安装')
+    throwHandleError("插件已在plugin目录下存在，请勿重新安装")
   }
   // 未安装 安装插件
   loading(`下载插件[${npmName}]中，请耐心等候...`)
   // 安装插件的地址
-  const pluginsDirectionPath = resolve(wcliSourcePath, 'plugins')
+  const pluginsDirectionPath = resolve(wcliSourcePath, "plugins")
   const downloadPluginPath = resolve(pluginsDirectionPath, npmName)
-  const templatePluginPath = resolve(pluginsDirectionPath, '__TEMPLATE__')
+  const templatePluginPath = resolve(pluginsDirectionPath, "__TEMPLATE__")
   // 插件下载前先创建目录结构以及一个临时目录
   await Promise.all([fse.ensureDir(downloadPluginPath), fse.ensureDir(templatePluginPath)])
   try {
     // 下载npm的压缩文件夹
-    execSync(`npm pack ${npmName}`, { cwd: templatePluginPath, stdio: 'inherit' })
+    execSync(`npm pack ${npmName}`, { cwd: templatePluginPath, stdio: "inherit" })
     const fileNameArray = await fse.readdir(templatePluginPath)
-    const downloadPluginTgz = fileNameArray.find((fileName) => fileName.includes('.tgz'))
+    const downloadPluginTgz = fileNameArray.find((fileName) => fileName.includes(".tgz"))
     const downloadPluginTgzPath = resolve(templatePluginPath, downloadPluginTgz)
     // 对.tgz的压缩文件进行解压
     await compressing.tgz.uncompress(downloadPluginTgzPath, templatePluginPath)
     // 把文件移动出package
-    const downloadPluginPackagePath = resolve(templatePluginPath, './package')
+    const downloadPluginPackagePath = resolve(templatePluginPath, "./package")
     await fse.move(downloadPluginPackagePath, downloadPluginPath, { overwrite: true })
     // 删除临时文件夹
     await fse.remove(templatePluginPath)
-    autoPackageJsonInstall(downloadPluginPath, 'yarn')
+    autoPackageJsonInstall(downloadPluginPath, "yarn")
     success(`插件[${npmName}]安装成功，你可以在项目中使用该插件！`)
     // 写入缓存
     writePluginCache({

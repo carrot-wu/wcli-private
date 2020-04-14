@@ -1,7 +1,7 @@
-import { WCliConfigJson } from '@srcTypes/configJsonType'
-import { defaultWCliConfigJson } from '@constants/index'
-import { isPlainObject } from '../checktype'
-import throwHandleError from '../errorHandler/error'
+import { WCliConfigJson } from "@srcTypes/configJsonType"
+import { defaultWCliConfigJson } from "@constants/index"
+import { isPlainObject } from "../checktype"
+import throwHandleError from "../errorHandler/error"
 
 // 初始化wcliconfig.json文件 不合法的话直接抛出错误
 // eslint-disable-next-line consistent-return
@@ -12,5 +12,5 @@ export function formatWCliConfigJson(wcliConfiJson: WCliConfigJson) {
       ...wcliConfiJson
     }
   }
-  throwHandleError('wcliconfig.json不合法，请检查是否缺少name或者plugin属性')
+  throwHandleError("wcliconfig.json不合法，请检查是否缺少name或者plugin属性")
 }

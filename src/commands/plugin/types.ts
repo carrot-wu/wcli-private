@@ -1,5 +1,5 @@
 
-export type PluginCommand = 'install' | 'upgrade' | 'remove' | 'list' | 'init'
+export type PluginCommand = "install" | "upgrade" | "remove" | "list" | "init"
 
 export interface PluginCacheParams {
   isNpm: boolean;

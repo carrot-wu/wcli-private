@@ -1,9 +1,9 @@
-import { resolve } from 'path'
-import { existsSync } from 'fs'
-import { WCliConfigJson } from '@srcTypes/configJsonType';
-import throwHandleError from '../errorHandler/error';
-import { isArray } from '../checktype';
-import autoPackageJsonInstall from '../autoPackageJsonInstall';
+import { resolve } from "path"
+import { existsSync } from "fs"
+import { WCliConfigJson } from "@srcTypes/configJsonType";
+import throwHandleError from "../errorHandler/error";
+import { isArray } from "../checktype";
+import autoPackageJsonInstall from "../autoPackageJsonInstall";
 
 /**
  * 获取文件名字
@@ -12,7 +12,7 @@ import autoPackageJsonInstall from '../autoPackageJsonInstall';
  */
 const getFileNameByRegx = (filePath: string): string => {
   const fileNameArray: string[] | null = /(^|\/)[^/]+\.(json|js|ts|txt|md|css|html)$/.exec(filePath)
-  return isArray(fileNameArray) ? fileNameArray[0].replace('/', '') : filePath
+  return isArray(fileNameArray) ? fileNameArray[0].replace("/", "") : filePath
 }
 
 /**
@@ -21,7 +21,7 @@ const getFileNameByRegx = (filePath: string): string => {
  * @returns {string}
  */
 export function getPluginPathWithPluginName(pluginName: string): string {
-  const localProjectPluginPath: string = resolve(__dirname, '../../../plugins', pluginName)
+  const localProjectPluginPath: string = resolve(__dirname, "../../../plugins", pluginName)
   return existsSync(localProjectPluginPath) ? localProjectPluginPath : null
 }
 
@@ -36,7 +36,7 @@ export function getPluginPathWithPluginName(pluginName: string): string {
 export function getPluginFileByName(wcliConfigJson: WCliConfigJson, filePath: string, fileName?: string): any {
   const execFileName = fileName || getFileNameByRegx(filePath)
   const { plugin, package: installType } = wcliConfigJson
-  let pluginPath = ''
+  let pluginPath = ""
   // 从本地wcliplugin文件plugin下查找
   if (getPluginPathWithPluginName(plugin)) {
     pluginPath = getPluginPathWithPluginName(plugin)
@@ -44,7 +44,7 @@ export function getPluginFileByName(wcliConfigJson: WCliConfigJson, filePath: st
     autoPackageJsonInstall(pluginPath, installType)
   } else {
     // 都找不到 提醒装插件
-    throwHandleError(`请检查插件：${plugin.bold}是否已安装，未安装可使用"${'wcli install plugin [plugin]'.bold}命令进行安装`)
+    throwHandleError(`请检查插件：${plugin.bold}是否已安装，未安装可使用"${"wcli install plugin [plugin]".bold}命令进行安装`)
   }
   const pluginFilePath = resolve(pluginPath, filePath)
   if (!existsSync(pluginFilePath)) {

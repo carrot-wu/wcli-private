@@ -1,34 +1,34 @@
-import throwHandleError from '@utils/errorHandler/error';
-import pluginInstall from './install'
-import pluginRemove from './remove'
-import pluginUpgrade from './upgrade'
-import listPlugin from './list'
-import initNewPlugin from './init'
-import { PluginCommand } from './types';
+import throwHandleError from "@utils/errorHandler/error";
+import pluginInstall from "./install"
+import pluginRemove from "./remove"
+import pluginUpgrade from "./upgrade"
+import listPlugin from "./list"
+import initNewPlugin from "./init"
+import { PluginCommand } from "./types";
 
 interface Options {
   npm: boolean;
 }
 
-const noPluginNameType = ['list', 'init']
+const noPluginNameType = ["list", "init"]
 function pluginCommand(command: PluginCommand, pluginName?: string, options?: Options): void | Promise<string | void> {
   console.log(command)
 
   if (noPluginNameType.indexOf(command) === -1 && !pluginName) {
-    throwHandleError('请填写需要操作的插件名')
+    throwHandleError("请填写需要操作的插件名")
   }
   const { npm: isNpm } = options
   let unCatchableCommand: never
   switch (command) {
-    case 'install':
+    case "install":
       return pluginInstall(pluginName, isNpm);
-    case 'remove':
+    case "remove":
       return pluginRemove(pluginName);
-    case 'upgrade':
+    case "upgrade":
       return pluginUpgrade(pluginName);
-    case 'list':
+    case "list":
       return listPlugin();
-    case 'init':
+    case "init":
       return initNewPlugin();
     default:
       unCatchableCommand = command

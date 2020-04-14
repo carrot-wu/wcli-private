@@ -1,13 +1,13 @@
-import * as path from 'path'
-import * as fse from 'fs-extra'
-import axios from 'axios'
-import { directorWalker } from '@utils/file/directorWalker';
-import { getCurrentBinFilePath } from '@utils/file';
-import { checkIsTextFile } from '@utils/file/checkFileIsText';
-import * as log from '@utils/log'
-import { PublishConfig } from '@srcTypes/publishConfig';
-import { getBranchFileTree } from './utils';
-import { getPublishCommitApi, getSingleBranch } from './api';
+import * as path from "path"
+import * as fse from "fs-extra"
+import axios from "axios"
+import { directorWalker } from "@utils/file/directorWalker";
+import { getCurrentBinFilePath } from "@utils/file";
+import { checkIsTextFile } from "@utils/file/checkFileIsText";
+import * as log from "@utils/log"
+import { PublishConfig } from "@srcTypes/publishConfig";
+import { getBranchFileTree } from "./utils";
+import { getPublishCommitApi, getSingleBranch } from "./api";
 
 
 interface GetCommitIdData {
@@ -33,14 +33,14 @@ interface GetCommitIdData {
   };
 }
 
-type ActionType = 'create' | 'delete' | 'move' | 'update' | 'chmod'
+type ActionType = "create" | "delete" | "move" | "update" | "chmod"
 
 interface CommitAction {
   action: ActionType;
   file_path: string;
   previous_path?: string;
   content?: string;
-  encoding?: 'text' | 'base64';
+  encoding?: "text" | "base64";
   last_commit_id?: string;
   execute_filemode?: boolean;
 }
@@ -65,8 +65,8 @@ async function getLatestCommitId(publishConfig: PublishConfig, token?: string): 
   const url = getSingleBranch(publishConfig)
   const { data } = await axios.get<GetCommitIdData>(url, {
     headers: {
-      'PRIVATE-TOKEN': token,
-      'X-Requested-With': 'XMLHttpRequest'
+      "PRIVATE-TOKEN": token,
+      "X-Requested-With": "XMLHttpRequest"
     }
   })
   return data.commit.id
@@ -74,7 +74,7 @@ async function getLatestCommitId(publishConfig: PublishConfig, token?: string): 
 
 async function publishFileWithGitlabCommit(publishParams: PublishFileWithGitlabCommitParams) {
   const { publishConfig, commitMsg, token } = publishParams
-  const { git, repository, target, branch = 'master', dist = 'dist' } = publishConfig
+  const { git, repository, target, branch = "master", dist = "dist" } = publishConfig
   // 命令行执行的dist目录地址
   const binDistFilePath = getCurrentBinFilePath(dist)
   // 获取commit api
@@ -86,7 +86,7 @@ async function publishFileWithGitlabCommit(publishParams: PublishFileWithGitlabC
   // 删除文件
   treeArray.forEach((file) => {
     actions.push({
-      action: 'delete',
+      action: "delete",
       file_path: file.path
     })
   })
@@ -97,14 +97,14 @@ async function publishFileWithGitlabCommit(publishParams: PublishFileWithGitlabC
   distFileArray.forEach((distPath) => {
     // 把绝对路径处理成相对路径
     const relativePath = path.relative(binDistFilePath, distPath)
-    const filePath = path.normalize(path.join(target, relativePath)).replace(/\\/g, '/')
+    const filePath = path.normalize(path.join(target, relativePath)).replace(/\\/g, "/")
     // 判断是文本还是二进制格式
     const isTextFile = checkIsTextFile(distPath)
     actions.push({
-      action: 'create',
+      action: "create",
       file_path: filePath,
-      content: fse.readFileSync(distPath, isTextFile ? 'utf8' : 'base64'),
-      encoding: isTextFile ? 'text' : 'base64'
+      content: fse.readFileSync(distPath, isTextFile ? "utf8" : "base64"),
+      encoding: isTextFile ? "text" : "base64"
     })
   })
   // 开始提交commit
@@ -117,19 +117,19 @@ async function publishFileWithGitlabCommit(publishParams: PublishFileWithGitlabC
     log.loading(`开始上传静态到远程仓库[${repository.bold}]`)
     const res = await axios.post<PublishFileWithGitlabCommitRes>(commitUrl, commit, {
       headers: {
-        'PRIVATE-TOKEN': token,
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/json'
+        "PRIVATE-TOKEN": token,
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json"
       }
     })
     if (res && res.data && res.data.id) {
-      log.success('上传成功')
+      log.success("上传成功")
       return res.data.id
     }
-    log.error('上传失败')
+    log.error("上传失败")
     return Promise.reject(res.statusText)
   } catch (e) {
-    log.error('上传失败')
+    log.error("上传失败")
     throw e
   }
 }
