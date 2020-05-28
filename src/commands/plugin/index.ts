@@ -12,7 +12,6 @@ interface Options {
 
 const noPluginNameType = ["list", "init"]
 function pluginCommand(command: PluginCommand, pluginName?: string, options?: Options): void | Promise<string | void> {
-  console.log(command)
 
   if (noPluginNameType.indexOf(command) === -1 && !pluginName) {
     throwHandleError("请填写需要操作的插件名")

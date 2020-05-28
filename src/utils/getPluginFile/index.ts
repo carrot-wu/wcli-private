@@ -38,7 +38,6 @@ export function getPluginFileByName(wcliConfigJson: WCliConfigJson, filePath: st
   const { plugin, package: installType } = wcliConfigJson
   let pluginPath = ""
   // 从本地wcliplugin文件plugin下查找
-  console.log(wcliConfigJson)
   if (getPluginPathWithPluginName(plugin)) {
     pluginPath = getPluginPathWithPluginName(plugin)
     // 查找到插件目录了 检查当前插件目录是否有package.json 有的话检查是否有node_modules目录 没有的话帮忙install
