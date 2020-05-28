@@ -32,5 +32,12 @@ export default async function createNewPlugin(): Promise<void> {
   // 复制模板文件
   await fse.copy(pluginTemplatePath, pluginDirName)
 
+  // 替换 packeage.json的name字段
+  const pluginPackagePath = resolve(pluginDirName, './package.json')
+  const defaultPackageJson = fse.readJsonSync(pluginPackagePath)
+  fse.writeJsonSync(pluginPackagePath, {
+    ...defaultPackageJson,
+    name: pluginName
+  })
   success("插件模板创建成功...")
 }

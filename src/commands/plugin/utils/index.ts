@@ -8,7 +8,7 @@ import throwHandleError from "@utils/errorHandler/error";
 import { loading, success } from "@utils/log";
 import autoPackageJsonInstall from "@utils/autoPackageJsonInstall";
 import { wcliSourcePath } from "@utils/file";
-import { writePluginCache } from "./pluginCacheUtils";
+import { writePluginCache } from "@utils/pluginCache";
 
 import download = require("download-git-repo");
 
@@ -92,7 +92,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
     // 写入缓存
     writePluginCache({
       pluginName,
-      isNpm: false,
+      pluginType: 'git',
       args: pluginGitPath,
       pluginPath: downloadPluginPath
     })
@@ -150,7 +150,7 @@ export async function installPluginByNpm(npmName: string): Promise<string> {
     // 写入缓存
     writePluginCache({
       pluginName: npmName,
-      isNpm: true,
+      pluginType: 'npm',
       args: npmName,
       pluginPath: downloadPluginPath
     })

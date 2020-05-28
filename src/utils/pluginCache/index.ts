@@ -2,14 +2,10 @@ import { normalize, resolve } from "path";
 import * as fse from "fs-extra";
 import { wcliSourcePath } from "@utils/file";
 import throwHandleError from "@utils/errorHandler/error";
-import { PluginCacheJson } from "../../types";
+import { PluginCacheJson, PluginCacheParams } from "@commands/plugin/types";
 
-interface WritePluginCacheParams {
-  isNpm: boolean;
-  pluginName: string;
-  pluginPath: string;
-  args: string;
-}
+type WritePluginCacheParams = Omit<PluginCacheParams, 'version'>
+
 // 插件插件完成时保存相对应的缓存
 export function writePluginCache(params: WritePluginCacheParams): void {
   const { pluginName, pluginPath } = params

@@ -4,6 +4,7 @@ import pluginRemove from "./remove"
 import pluginUpgrade from "./upgrade"
 import listPlugin from "./list"
 import initNewPlugin from "./init"
+import linkPlugin from "./link"
 import { PluginCommand } from "./types";
 
 interface Options {
@@ -27,6 +28,9 @@ function pluginCommand(command: PluginCommand, pluginName?: string, options?: Op
       return pluginUpgrade(pluginName);
     case "list":
       return listPlugin();
+      // link被本地插件用于开发
+    case "link":
+        return linkPlugin()
     case "init":
       return initNewPlugin();
     default:

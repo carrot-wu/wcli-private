@@ -1,0 +1,4 @@
+{
+  "name": "@carrotwu/wcli",
+  "plugin": "wcli-project-plugin"
+}
