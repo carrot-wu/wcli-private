@@ -3,12 +3,14 @@ import "module-alias/register"
 import "colors"
 import * as commander from "commander";
 import { packageJson } from "@utils/file"
+import {
+  devCommand,
+  buildCommand,
+  pluginCommand,
+  publishCommand,
+  upgradeCommand
+} from "./commands"
 import notifyUpdateWcli from "@utils/notifyUpdateWcli"
-import publishCommand from "./commands/publish";
-import pluginCommand from "./commands/plugin";
-import devCommand from "./commands/dev";
-import buildCommand from "./commands/build";
-import upgradeCommand from "./commands/upgrade";
 import errorHandler from "./utils/errorHandler/index";
 import iconBanner from "./constants/banner";
 
@@ -54,7 +56,7 @@ localCommander
 // wcli升级指令
 localCommander
   .command("upgrade")
-  .option("-r, --rebase", "通过merge的形式更新wcli".green)
+  .option("-y, --yarn", "通过yarn的命令更新wcli脚手架".green)
   .description(`${"[upgrade]".blue}${"手动更新wcli脚手架".yellow}`)
   .action(errorHandler(upgradeCommand))
 

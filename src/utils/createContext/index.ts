@@ -58,6 +58,12 @@ interface DevContext {
     fse: typeof fse;
   };
 }
+
+/**
+ * publish命令下往publish.js注入的依赖对象
+ * @param {PublishExtraParams} publishExtraParam
+ * @returns {PublishContext}
+ */
 export function createPublishContext(publishExtraParam: PublishExtraParams): PublishContext {
   const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtraParam
   return {
@@ -84,6 +90,11 @@ export function createPublishContext(publishExtraParam: PublishExtraParams): Pub
   }
 }
 
+/**
+ * dev命令下往dev.js注入的依赖对象
+ * @param {DevExtraParams} devExtraParam
+ * @returns {DevContext}
+ */
 export function createDevContext(devExtraParam: DevExtraParams): DevContext {
   const { wcliConfigJson, debug } = devExtraParam
   return {
@@ -106,6 +117,11 @@ export function createDevContext(devExtraParam: DevExtraParams): DevContext {
   }
 }
 
+/**
+ * build命令下往build.js注入的依赖对象
+ * @param {DevExtraParams} buildExtraParam
+ * @returns {DevContext}
+ */
 export function createBuildContext(buildExtraParam: DevExtraParams): DevContext {
   const { wcliConfigJson, debug } = buildExtraParam
   return {
