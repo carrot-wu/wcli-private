@@ -84,9 +84,10 @@ interface Context {
 1. `wcli plugin list`: 表格展示已安装过得plugin列表。
 2. `wcli plugin remove XXX`: 删除具体某个插件。
 3. `wcli plugin upgrade`: 更新插件(todo 暂时是通过插件重新安装的方法更新)
+4. `wcli plugin link XXX`: 跟npm link相似，用于本地插件开发时的索引指向。用于本地插件的开发以及本地插件的使用
 
 ## wcli dev
-执行插件目录下的`dev.js`文件，在当前目录下可以手动启动一个webpack server服务。可以通过`Inquirer`让用户选择一些前置性的参数如（开发环境，代理地址，需要开发的路由模块等）个性化的启动开发模式。  
+执行插件目录下的`dev.js`文件，在当前目录下可以手动启动一个webpack server服务。可以通过`Inquirer`让用户选择一些前置性的参数如（开发环境，代理地址，需要开发的路由模块等）个性化的启动开发模式。
 
 在`dev.js`中您可以使用一些框架库如`vue-cli` `create-react-app`字典的script命令，也可以在`dev.js`中自搭建一个webapck的server进行开发。
 

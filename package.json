@@ -1,6 +1,6 @@
 {
   "name": "@carrotwu/wcli",
-  "version": "1.0.0",
+  "version": "0.0.9",
   "description": "A global cli tool that supports custom development, packaging and pushing",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,9 @@
   },
   "bin": {
     "wcli": "./dist/main.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "ts",
@@ -22,6 +25,7 @@
     "@types/commander": "^2.12.2",
     "@types/fs-extra": "^8.0.1",
     "@types/module-alias": "^2.0.0",
+    "@types/update-notifier": "^4.1.0",
     "@types/node": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
@@ -41,7 +45,8 @@
     "enquirer": "^2.3.5",
     "fs-extra": "^8.1.0",
     "module-alias": "^2.2.2",
-    "simple-git": "^1.131.0"
+    "simple-git": "^1.131.0",
+    "update-notifier": "^4.1.0"
   },
   "_moduleAliases": {
     "@utils": "dist/utils",

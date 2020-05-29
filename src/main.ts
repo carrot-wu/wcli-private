@@ -3,6 +3,7 @@ import "module-alias/register"
 import "colors"
 import * as commander from "commander";
 import { packageJson } from "@utils/file"
+import notifyUpdateWcli from "@utils/notifyUpdateWcli"
 import publishCommand from "./commands/publish";
 import pluginCommand from "./commands/plugin";
 import devCommand from "./commands/dev";
@@ -59,3 +60,6 @@ localCommander
 
 
 localCommander.parse(process.argv);
+
+// 检查更新wcli是否需要更新
+notifyUpdateWcli()
