@@ -10,7 +10,7 @@ import {
   publishCommand,
   upgradeCommand
 } from "./commands"
-import notifyUpdateWcli from "@utils/notifyUpdateWcli"
+import notifyUpdate from "@utils/notifyUpdate"
 import errorHandler from "./utils/errorHandler/index";
 import iconBanner from "./constants/banner";
 
@@ -63,5 +63,5 @@ localCommander
 
 localCommander.parse(process.argv);
 
-// 检查更新wcli是否需要更新
-notifyUpdateWcli()
+// 检查更新wcli以及npm下载的插件是否需要更新
+notifyUpdate()

@@ -1,6 +1,6 @@
 import { normalize, resolve } from "path";
 import * as fse from "fs-extra";
-import { wcliSourcePath } from "@utils/file";
+import { wcliSourcePath, pluginCachePath, wcliPluginCacheJson } from "@utils/file";
 import throwHandleError from "@utils/errorHandler/error";
 import { PluginCacheJson, PluginCacheParams } from "@commands/plugin/types";
 
@@ -10,7 +10,6 @@ type WritePluginCacheParams = Omit<PluginCacheParams, 'version'>
 export function writePluginCache(params: WritePluginCacheParams): void {
   const { pluginName, pluginPath } = params
   // 获取缓存的json文件
-  const pluginCachePath = resolve(wcliSourcePath, "./plugins/cache.json")
   const { version } = fse.readJsonSync(resolve(pluginPath, "./package.json"))
   // 获取插件的版本号
   let writeCacheObj: PluginCacheJson = {
@@ -20,13 +19,14 @@ export function writePluginCache(params: WritePluginCacheParams): void {
       version
     }
   }
-  if (fse.existsSync(pluginCachePath)) {
-    const oldPluginCacheJson: PluginCacheJson = fse.readJsonSync(pluginCachePath)
+  // 写入新的插件缓存
+  if (wcliPluginCacheJson) {
     writeCacheObj = {
-      ...oldPluginCacheJson,
+      ...wcliPluginCacheJson,
       ...writeCacheObj
     }
   } else {
+    // 没有的话 创建
     fse.ensureFileSync(pluginCachePath)
   }
   fse.writeJSONSync(pluginCachePath, writeCacheObj)
