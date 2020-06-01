@@ -50,5 +50,5 @@ export default async function linkPlugin() {
     pluginPath: localPluginPath
   })
   // 找到目录了 自动安装包
-  autoPackageJsonInstall(localPluginPath, "yarn")
+  autoPackageJsonInstall(localPluginPath)
 }

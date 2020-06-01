@@ -1,7 +1,8 @@
 // 根据路径引用相关文件
-import { resolve } from "path";
-import { existsSync, readJsonSync } from "fs-extra"
+import {resolve} from "path";
+import {existsSync, readJsonSync} from "fs-extra"
 import {PluginCacheJson} from "@commands/plugin/types";
+import {WCliConfigJson} from "@srcTypes/configJsonType";
 
 const wcliSourcePath = resolve(__dirname, "../../../")
 // wcli package。json
@@ -28,7 +29,7 @@ const wcliPluginCacheJson: PluginCacheJson | null = existsSync(pluginCachePath) 
 
 // 执行命令项目wcliconfig.json
 // eslint-disable-next-line
-const currentWcliConfig = existsSync(currentWcliConfigPath) ? require(currentWcliConfigPath) : null
+const currentWcliConfig: WCliConfigJson = existsSync(currentWcliConfigPath) ? require(currentWcliConfigPath) : null
 // 执行命令项目packeage.json
 // eslint-disable-next-line
 const currentPackageJson = existsSync(currentPackageJsonPath) ? require(currentPackageJsonPath) : {}

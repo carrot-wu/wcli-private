@@ -25,6 +25,7 @@ function pluginCommand(command: PluginCommand, pluginName?: string, options?: Op
     case "remove":
       return pluginRemove(pluginName);
     case "upgrade":
+    case "update":
       return pluginUpgrade(pluginName);
     case "list":
       return listPlugin();

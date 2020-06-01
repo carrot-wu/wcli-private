@@ -4,7 +4,7 @@ export interface WCliConfigJson {
   // 用到的插件名
   plugin: string;
   // 项目使用过的包管理工具
-  package?: "npm" | "yarn";
+  package?: "npm" | "yarn" | "cnpm";
   // 打包的路径
   path?: {
     output?: string;

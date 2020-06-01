@@ -1,0 +1,15 @@
+{
+  "name": "write your own wclifonfig.json",
+  "plugin": "write the plugin name use by current project",
+  "package": "npm",
+  "path": {
+    "output": "dist",
+    "public": "/"
+  },
+  "devServer": {
+    "port": 8888,
+    "https": false,
+    "proxy": {}
+  },
+  "publish": null
+}

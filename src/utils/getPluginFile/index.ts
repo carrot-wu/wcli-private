@@ -35,7 +35,7 @@ export function getPluginPathWithPluginName(pluginName: string): string {
  */
 export function getPluginFileByName(wcliConfigJson: WCliConfigJson, filePath: string, fileName?: string): any {
   const execFileName = fileName || getFileNameByRegx(filePath)
-  const { plugin: pluginName, package: installType } = wcliConfigJson
+  const { plugin: pluginName } = wcliConfigJson
   let pluginPath = ""
 
   // 获取安装插件时的配置
@@ -49,7 +49,7 @@ export function getPluginFileByName(wcliConfigJson: WCliConfigJson, filePath: st
       if (getPluginPathWithPluginName(pluginName)) {
         pluginPath = getPluginPathWithPluginName(pluginName)
         // 查找到插件目录了 检查当前插件目录是否有package.json 有的话检查是否有node_modules目录 没有的话帮忙install
-        autoPackageJsonInstall(pluginPath, installType)
+        autoPackageJsonInstall(pluginPath)
       } else {
         // 都找不到 提醒装插件
         throwHandleError(`请检查插件：${pluginName.bold}是否已安装，未安装可使用"${"wcli install plugin [plugin]".bold}命令进行安装`)

@@ -1,4 +1,4 @@
-export type PluginCommand = "install" | "upgrade" | "remove" | "list" | "init" | "link"
+export type PluginCommand = "install" | "upgrade" | "remove" | "list" | "init" | "link" | "update"
 
 // 插件类型 分为 1.npm下载的插件 2通过git下载的插件 3通过link命令本地指向的插件
 type PluginType = 'npm' | 'git' | 'local'

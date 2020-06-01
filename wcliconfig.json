@@ -1,4 +1,1 @@
-{
-  "name": "@carrotwu/wcli",
-  "plugin": "wcli-project-plugin"
-}
+{"name":"@carrotwu/wcli","package":"yarn","path":{"output":"dist","public":"/"},"plugin":"wcli-project-plugin","devServer":{"port":8888,"https":false,"proxy":{}},"publish":null}

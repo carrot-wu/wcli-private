@@ -7,7 +7,7 @@ import { getPluginPathWithPluginName } from "@utils/getPluginFile";
 import throwHandleError from "@utils/errorHandler/error";
 import { loading, success } from "@utils/log";
 import autoPackageJsonInstall from "@utils/autoPackageJsonInstall";
-import {pluginsDirectionPath, wcliSourcePath} from "@utils/file";
+import {pluginsDirectionPath} from "@utils/file";
 import { writePluginCache } from "@utils/pluginCache";
 
 import download = require("download-git-repo");
@@ -96,7 +96,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
       pluginPath: downloadPluginPath
     })
     success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`)
-    autoPackageJsonInstall(downloadPluginPath, "yarn")
+    autoPackageJsonInstall(downloadPluginPath)
     success(`插件依赖[${pluginName}]安装成功，你可以在项目中使用该插件！`)
 
     return downloadPluginPath
@@ -143,7 +143,7 @@ export async function installPluginByNpm(npmName: string): Promise<string> {
     await fse.move(downloadPluginPackagePath, downloadPluginPath, { overwrite: true })
     // 删除临时文件夹
     await fse.remove(templatePluginPath)
-    autoPackageJsonInstall(downloadPluginPath, "yarn")
+    autoPackageJsonInstall(downloadPluginPath)
     success(`插件[${npmName}]安装成功，你可以在项目中使用该插件！`)
     // 写入缓存
     writePluginCache({

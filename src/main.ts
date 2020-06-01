@@ -4,6 +4,7 @@ import "colors"
 import * as commander from "commander";
 import { packageJson } from "@utils/file"
 import {
+  initCommand,
   devCommand,
   buildCommand,
   pluginCommand,
@@ -11,8 +12,8 @@ import {
   upgradeCommand
 } from "./commands"
 import notifyUpdate from "@utils/notifyUpdate"
-import errorHandler from "./utils/errorHandler/index";
-import iconBanner from "./constants/banner";
+import errorHandler from "@utils/errorHandler"
+import iconBanner from "@constants/banner"
 
 const { version, name } = packageJson
 // 注册本地指令
@@ -25,6 +26,12 @@ localCommander
   .usage(iconBanner)
 
 // 注册指令
+
+// 初始化模式指令
+localCommander
+  .command("init [command]")
+  .description(`${"[init]".blue}${"通过init命令创建初始化wcliconfig.json, vue, react等模板".yellow}`)
+  .action(errorHandler(initCommand))
 
 // 开发模式指令
 localCommander
