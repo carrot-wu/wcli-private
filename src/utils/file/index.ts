@@ -13,6 +13,9 @@ const currentBinPath: string = process.cwd()
 const pluginsDirectionPath = resolve(wcliSourcePath, "plugins")
 // plugins下的插件缓存json文件
 const pluginCachePath = resolve(pluginsDirectionPath, "cache.json")
+// 当前template模板目录所在地址
+const templateDirectionPath = resolve(wcliSourcePath, "template")
+
 
 
 // 执行命令项目文件获取路径方法
@@ -38,6 +41,7 @@ export {
   wcliSourcePath,
   pluginsDirectionPath,
   pluginCachePath,
+  templateDirectionPath,
   currentBinPath,
   currentWcliConfig,
   currentPackageJson,

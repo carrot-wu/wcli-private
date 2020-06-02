@@ -1,12 +1,12 @@
 import { prompt } from "enquirer";
 import * as fse from "fs-extra"
 import { resolve } from "path"
-import { currentBinPath, wcliSourcePath } from "@utils/file";
+import {currentBinPath, templateDirectionPath} from "@utils/file";
 import throwHandleError from "@utils/errorHandler/error";
 import { loading, success } from "@utils/log";
 
 export default async function createNewPlugin(): Promise<void> {
-  const pluginTemplatePath = resolve(wcliSourcePath, "template/defaultPluginTemplate")
+  const pluginTemplatePath = resolve(templateDirectionPath, "defaultPluginTemplate")
   const promptInputMsg = {
     type: "input",
     message: "请输入要开发的新插件名称",

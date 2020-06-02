@@ -2,6 +2,8 @@
 import {InitCommand} from "./types";
 import initNewWcliConfigJson from "@commands/init/initWcliConfig";
 import throwHandleError from "@utils/errorHandler/error";
+import initReact from "@commands/init/initReact";
+import initVue from "@commands/init/initVue";
 
 // 现在默认只支持初始化生成默认的wcliconfig.json文件
 
@@ -13,8 +15,9 @@ export default function init(command: InitCommand) {
     case 'wj' :
       return initNewWcliConfigJson();
     case 'react':
+      return initReact()
     case 'vue':
-      return false;
+      return initVue()
     default :
       unHandledInitCommand = command;
       throwHandleError(`命令init [${unHandledInitCommand}] 未在wcli进行注册`)
