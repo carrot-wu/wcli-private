@@ -1,4 +1,4 @@
-import * as simpleGit from "simple-git/promise";
+import simpleGit from "simple-git";
 import * as fse from "fs-extra"
 import * as path from "path"
 import { PublishConfig } from "@srcTypes/publishConfig";

@@ -1,11 +1,13 @@
 import { prompt } from "enquirer"
 import axios, { AxiosStatic } from "axios"
 import * as fse from "fs-extra"
+import * as simpleGit from "simple-git"
 import { WCliConfigJson } from "@srcTypes/configJsonType";
-import { publishFileWithGitlabCommit } from "@commands/publish/gitlab"
+import {getCommitMessage, publishFileWithGitlabCommit} from "@commands/publish/gitlab"
 import publishFileWithGit from "@commands/publish/publishWithGit";
 import * as logTools from "@utils/log"
 import { currentBinPath, getCurrentBinFilePath } from "../file";
+import throwHandleError from "@utils/errorHandler/error";
 
 // 传参给publish插件的context参数
 interface PublishExtraParams {
@@ -32,11 +34,14 @@ interface PublishContext {
     publishFileWithGitlabCommit: typeof publishFileWithGitlabCommit;
     publishFileWithGit: typeof publishFileWithGit;
     logTools: typeof logTools;
+    throwHandleError: typeof throwHandleError;
+    getCommitMessage: typeof getCommitMessage;
   };
   toolsModules: {
     prompt: typeof prompt;
     axios: AxiosStatic;
     fse: typeof fse;
+    simpleGit: typeof simpleGit
   };
 }
 
@@ -51,6 +56,7 @@ interface DevContext {
   utils: {
     getCurrentBinFilePath: (...paths: string[]) => string;
     logTools: typeof logTools;
+    throwHandleError: typeof throwHandleError;
   };
   toolsModules: {
     prompt: typeof prompt;
@@ -80,12 +86,15 @@ export function createPublishContext(publishExtraParam: PublishExtraParams): Pub
       getCurrentBinFilePath,
       publishFileWithGitlabCommit,
       publishFileWithGit,
-      logTools
+      logTools,
+      throwHandleError,
+      getCommitMessage
     },
     toolsModules: {
       prompt,
       axios,
-      fse
+      fse,
+      simpleGit
     }
   }
 }
@@ -107,7 +116,8 @@ export function createDevContext(devExtraParam: DevExtraParams): DevContext {
     },
     utils: {
       getCurrentBinFilePath,
-      logTools
+      logTools,
+      throwHandleError
     },
     toolsModules: {
       prompt,
@@ -134,7 +144,8 @@ export function createBuildContext(buildExtraParam: DevExtraParams): DevContext 
     },
     utils: {
       getCurrentBinFilePath,
-      logTools
+      logTools,
+      throwHandleError
     },
     toolsModules: {
       prompt,

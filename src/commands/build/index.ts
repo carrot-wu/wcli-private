@@ -10,7 +10,6 @@ import { createBuildContext } from "@utils/createContext"
 interface Options {
   debug?: boolean;
 }
-
 const BUILD_FILE = "build.js"
 
 const buildCommand = async (options: Options) => {
@@ -23,13 +22,13 @@ const buildCommand = async (options: Options) => {
   const wcliConfigJson: WCliConfigJson = formatWCliConfigJson(currentWcliConfig)
 
   // 获取插件的publish.js文件
-  const devFile = getPluginFileByName(wcliConfigJson, BUILD_FILE)
+  const buildFile = getPluginFileByName(wcliConfigJson, BUILD_FILE)
 
-  if (!isFunction(devFile)) {
+  if (!isFunction(buildFile)) {
     throwHandleError(`${BUILD_FILE} is not the function`)
   }
   // 把一些通用上下文参数和方法注入打包文件中
-  return devFile(createBuildContext({ wcliConfigJson, debug }))
+  return buildFile(createBuildContext({ wcliConfigJson, debug }))
 }
 
 export default buildCommand

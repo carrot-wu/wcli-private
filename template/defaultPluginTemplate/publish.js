@@ -1,3 +1,5 @@
+import throwHandleError from '../../src/utils/errorHandler/error'
+
 module.exports = function(context) {
   const {
     config: {
@@ -13,12 +15,14 @@ module.exports = function(context) {
       getCurrentBinFilePath,
       publishFileWithGitlabCommit,
       publishFileWithGit,
-      logTools
+      logTools,
+      throwHandleError
     },
     toolsModules: {
       prompt,
       axios,
-      fse
+      fse,
+      simpleGit
     }
   } = context
 }

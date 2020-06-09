@@ -17,6 +17,14 @@ yarn global add @carrotwu/wcli
 2. 通过`wcli plugin install XXX`安装相应的plugin插件。
 3. 执行wcli提供的`dev`,`publish`,`build`等指令。
 
+## init命令
+
+初始化模命令，适用于生成新的wcliconfig.json文件或者创建新的react后者vue项目模板。
+
+### wcli init (wj or wcliconfig)
+
+在当前目录下新创建一个wcliconfig.json文件或者重置初始化当前目录逇wcliconfig.json文件
+
 ## plugin指令
 
 ### wcli plugin install

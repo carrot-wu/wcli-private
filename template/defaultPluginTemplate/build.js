@@ -1,3 +1,5 @@
+import throwHandleError from '../../src/utils/errorHandler/error'
+
 module.exports = function(context) {
   const {
     config: {
@@ -9,7 +11,8 @@ module.exports = function(context) {
     },
     utils: {
       getCurrentBinFilePath,
-      logTools
+      logTools,
+      throwHandleError
     },
     toolsModules: {
       prompt,
