@@ -1,6 +1,6 @@
 {
   "name": "@carrotwu/wcli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A global cli tool that supports custom development, packaging and pushing",
   "main": "index.js",
   "scripts": {
