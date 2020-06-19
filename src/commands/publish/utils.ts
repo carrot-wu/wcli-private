@@ -19,7 +19,7 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
   // 不存在 获取是否有其余的项目已经填写了token 需要把NOT_NEED_TOKEN不需要填写token的剔除
   const hasTokenPluginArray: string[] = Object.keys(pluginCacheToken).filter((pluginName) => pluginCacheToken[pluginName] && pluginCacheToken[pluginName] !== NOT_NEED_TOKEN)
 
-  const hasPluginTokenChoices = hasTokenPluginArray.map((token) => ({ key: token, name: token, value: token }))
+  const hasPluginTokenChoices = hasTokenPluginArray.map((token) => ({ key: token, name: token, message: token }))
   const choices = hasPluginTokenChoices.concat(...defaultTokenConfigArray)
   const message: string = hasPluginTokenChoices.length
     ? "初次发布私有项目需要使用发布仓库的token才能进行验证提交，您也可以选择使用其他插件的token进行提交"
@@ -31,14 +31,15 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
     choices
   }
   const { token } = await prompt([promptSelectToken])
-  if (token !== ADD_NEW_TOKEN) {
-    // 使用之前插件的token
-    return pluginCacheToken[token]
-  }
 
   // 不需要设置token 不需要验证 后续不提示填写token
   if (token === NOT_NEED_TOKEN) {
     return token
+  }
+
+  if (token !== ADD_NEW_TOKEN) {
+    // 使用之前插件的token
+    return pluginCacheToken[token]
   }
   // 重新输入一个token
   const promptInputToken = {

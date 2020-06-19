@@ -11,12 +11,12 @@ import throwHandleError from "@utils/errorHandler/error";
 interface Choice {
   key: string;
   name: string;
-  value: string;
+  message: string;
 }
 
 const initChoices: Choice[] = [
-  { key: 'yes', name: 'yes', value: 'yes'},
-  { key: 'no', name: 'no', value: 'no'},
+  { key: 'yes', name: 'yes', message: 'yes'},
+  { key: 'no', name: 'no', message: 'no'},
 ]
 
 /**
