@@ -4,7 +4,7 @@ export interface WCliConfigJson {
   // 用到的插件名
   plugin: string;
   // 项目使用过的包管理工具
-  package?: "npm" | "yarn" | "cnpm";
+  package?: 'npm' | 'yarn' | 'cnpm';
   // 打包的路径
   path?: {
     output?: string;
@@ -17,7 +17,7 @@ export interface WCliConfigJson {
     // 是否开启http
     https?: boolean;
     // 代理配置
-    proxy?: {[key in string]: string};
+    proxy?: { [key in string]: string };
   };
   // publish模式的配置
   publish?: any;

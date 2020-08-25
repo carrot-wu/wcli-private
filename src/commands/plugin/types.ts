@@ -1,10 +1,10 @@
-export type PluginCommand = "install" | "upgrade" | "remove" | "list" | "init" | "link" | "update"
+export type PluginCommand = 'install' | 'upgrade' | 'remove' | 'list' | 'init' | 'link' | 'update';
 
 // 插件类型 分为 1.npm下载的插件 2通过git下载的插件 3通过link命令本地指向的插件
-type PluginType = 'npm' | 'git' | 'local'
+type PluginType = 'npm' | 'git' | 'local';
 
 export interface PluginCacheParams {
-  //插件类型 分为 1.npm下载的插件 2通过git下载的插件 3通过link命令本地指向的插件
+  // 插件类型 分为 1.npm下载的插件 2通过git下载的插件 3通过link命令本地指向的插件
   pluginType: PluginType;
   // 插件名称
   pluginName: string;
@@ -17,5 +17,5 @@ export interface PluginCacheParams {
 }
 
 export type PluginCacheJson = {
-  [key in string]: PluginCacheParams
-}
+  [key in string]: PluginCacheParams;
+};

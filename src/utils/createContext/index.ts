@@ -1,13 +1,13 @@
-import { prompt } from "enquirer"
-import axios, { AxiosStatic } from "axios"
-import * as fse from "fs-extra"
-import * as simpleGit from "simple-git"
-import { WCliConfigJson } from "@srcTypes/configJsonType";
-import {getCommitMessage, publishFileWithGitlabCommit} from "@commands/publish/gitlab"
-import publishFileWithGit from "@commands/publish/publishWithGit";
-import * as logTools from "@utils/log"
-import { currentBinPath, getCurrentBinFilePath } from "../file";
-import throwHandleError from "@utils/errorHandler/error";
+import { prompt } from 'enquirer';
+import axios, { AxiosStatic } from 'axios';
+import * as fse from 'fs-extra';
+import * as simpleGit from 'simple-git';
+import { WCliConfigJson } from '@srcTypes/configJsonType';
+import { getCommitMessage, publishFileWithGitlabCommit } from '@commands/publish/gitlab';
+import publishFileWithGit from '@commands/publish/publishWithGit';
+import * as logTools from '@utils/log';
+import throwHandleError from '@utils/errorHandler/error';
+import { currentBinPath, getCurrentBinFilePath } from '../file';
 
 // 传参给publish插件的context参数
 interface PublishExtraParams {
@@ -17,7 +17,7 @@ interface PublishExtraParams {
   publishCommitMsg: string;
 }
 // 传参给dev插件的context参数
-type DevExtraParams = Omit<PublishExtraParams, "publishToken" | "publishCommitMsg">
+type DevExtraParams = Omit<PublishExtraParams, 'publishToken' | 'publishCommitMsg'>;
 
 interface PublishContext {
   config: {
@@ -41,7 +41,7 @@ interface PublishContext {
     prompt: typeof prompt;
     axios: AxiosStatic;
     fse: typeof fse;
-    simpleGit: typeof simpleGit
+    simpleGit: typeof simpleGit;
   };
 }
 
@@ -71,16 +71,16 @@ interface DevContext {
  * @returns {PublishContext}
  */
 export function createPublishContext(publishExtraParam: PublishExtraParams): PublishContext {
-  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtraParam
+  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtraParam;
   return {
     config: {
       wcliConfigJson,
       isDebug: debug,
       token: publishToken,
-      publishCommitMsg
+      publishCommitMsg,
     },
     paths: {
-      currentBinPath
+      currentBinPath,
     },
     utils: {
       getCurrentBinFilePath,
@@ -88,15 +88,15 @@ export function createPublishContext(publishExtraParam: PublishExtraParams): Pub
       publishFileWithGit,
       logTools,
       throwHandleError,
-      getCommitMessage
+      getCommitMessage,
     },
     toolsModules: {
       prompt,
       axios,
       fse,
-      simpleGit
-    }
-  }
+      simpleGit,
+    },
+  };
 }
 
 /**
@@ -105,26 +105,26 @@ export function createPublishContext(publishExtraParam: PublishExtraParams): Pub
  * @returns {DevContext}
  */
 export function createDevContext(devExtraParam: DevExtraParams): DevContext {
-  const { wcliConfigJson, debug } = devExtraParam
+  const { wcliConfigJson, debug } = devExtraParam;
   return {
     config: {
       wcliConfigJson,
-      isDebug: debug
+      isDebug: debug,
     },
     paths: {
-      currentBinPath
+      currentBinPath,
     },
     utils: {
       getCurrentBinFilePath,
       logTools,
-      throwHandleError
+      throwHandleError,
     },
     toolsModules: {
       prompt,
       axios,
-      fse
-    }
-  }
+      fse,
+    },
+  };
 }
 
 /**
@@ -133,24 +133,24 @@ export function createDevContext(devExtraParam: DevExtraParams): DevContext {
  * @returns {DevContext}
  */
 export function createBuildContext(buildExtraParam: DevExtraParams): DevContext {
-  const { wcliConfigJson, debug } = buildExtraParam
+  const { wcliConfigJson, debug } = buildExtraParam;
   return {
     config: {
       wcliConfigJson,
-      isDebug: debug
+      isDebug: debug,
     },
     paths: {
-      currentBinPath
+      currentBinPath,
     },
     utils: {
       getCurrentBinFilePath,
       logTools,
-      throwHandleError
+      throwHandleError,
     },
     toolsModules: {
       prompt,
       axios,
-      fse
-    }
-  }
+      fse,
+    },
+  };
 }

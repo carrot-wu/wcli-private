@@ -10,8 +10,8 @@ interface GetSingleBranch {
  * @returns {string}
  */
 function getSingleBranch(projectConfig: GetSingleBranch): string {
-  const { git, repository, branch } = projectConfig
-  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/branches/${branch || "master"}`
+  const { git, repository, branch } = projectConfig;
+  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/branches/${branch || 'master'}`;
 }
 
 /**
@@ -21,7 +21,7 @@ function getSingleBranch(projectConfig: GetSingleBranch): string {
  * @returns {string}
  */
 function getPublishCommitApi(git: string, repository: string): string {
-  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/commits`
+  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/commits`;
 }
 
 /**
@@ -31,11 +31,7 @@ function getPublishCommitApi(git: string, repository: string): string {
  * @returns {string}
  */
 function getBranchFileTreeApi(git: string, repository: string): string {
-  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/tree`
+  return `${git}/api/v4/projects/${encodeURIComponent(repository)}/repository/tree`;
 }
 
-export {
-  getSingleBranch,
-  getPublishCommitApi,
-  getBranchFileTreeApi
-}
+export { getSingleBranch, getPublishCommitApi, getBranchFileTreeApi };

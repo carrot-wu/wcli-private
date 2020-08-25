@@ -1,5 +1,5 @@
-import axios from "axios";
-import { getBranchFileTreeApi } from "./api";
+import axios from 'axios';
+import { getBranchFileTreeApi } from './api';
 
 interface BranchFileTreeParams {
   git: string;
@@ -12,7 +12,7 @@ interface BranchFileTreeParams {
 interface BranchFileTreeRes {
   id: string;
   name: string;
-  type: "tree" | "blob";
+  type: 'tree' | 'blob';
   path: string;
   mode: string;
 }
@@ -23,24 +23,22 @@ interface BranchFileTreeRes {
  * @returns {Promise<BranchFileTreeRes[]>}
  */
 async function getBranchFileTree(params: BranchFileTreeParams): Promise<BranchFileTreeRes[]> {
-  const { git, repository, token, branch = "master", target } = params
-  const url = getBranchFileTreeApi(git, repository)
+  const { git, repository, token, branch = 'master', target } = params;
+  const url = getBranchFileTreeApi(git, repository);
   const { data } = await axios.get<BranchFileTreeRes[]>(url, {
     headers: {
-      "PRIVATE-TOKEN": token,
-      "X-Requested-With": "XMLHttpRequest",
+      'PRIVATE-TOKEN': token,
+      'X-Requested-With': 'XMLHttpRequest',
     },
     params: {
       ref: branch,
       path: target,
       recursive: true,
-      per_page: 5000
-    }
-  })
+      per_page: 5000,
+    },
+  });
   //  其中tree为文件夹 需要剔除
-  return data.filter((file) => file.type !== "tree")
+  return data.filter((file) => file.type !== 'tree');
 }
 
-export {
-  getBranchFileTree
-}
+export { getBranchFileTree };

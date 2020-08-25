@@ -1,14 +1,14 @@
-import * as path from "path";
-import * as fse from "fs-extra"
-import throwHandleError from "@utils/errorHandler/error";
+import * as path from 'path';
+import * as fse from 'fs-extra';
+import throwHandleError from '@utils/errorHandler/error';
 
 interface CacheConfigJson {
   pluginCacheToken: {
-    [k in string]: string
+    [k in string]: string;
   };
 }
 // 缓存路径
-const cacheConfigJsonPath = path.resolve(__dirname, "../../gitlabCache.json")
+const cacheConfigJsonPath = path.resolve(__dirname, '../../gitlabCache.json');
 
 function getTokenCacheConfig(): CacheConfigJson {
   if (fse.existsSync(cacheConfigJsonPath)) {
@@ -17,11 +17,11 @@ function getTokenCacheConfig(): CacheConfigJson {
     return require(cacheConfigJsonPath)
   }
   try {
-    fse.outputJSONSync(cacheConfigJsonPath, { pluginCacheToken: {} })
-    return fse.readJsonSync(cacheConfigJsonPath) as CacheConfigJson
+    fse.outputJSONSync(cacheConfigJsonPath, { pluginCacheToken: {} });
+    return fse.readJsonSync(cacheConfigJsonPath) as CacheConfigJson;
   } catch (e) {
-    throwHandleError("创建gitlabCache.json失败")
+    throwHandleError('创建gitlabCache.json失败');
   }
 }
 
-export default getTokenCacheConfig
+export default getTokenCacheConfig;

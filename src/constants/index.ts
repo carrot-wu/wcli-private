@@ -1,20 +1,18 @@
-import { WCliConfigJson } from "../types/configJsonType";
+import { WCliConfigJson } from '../types/configJsonType';
 
 const defaultWCliConfigJson: WCliConfigJson = {
-  name: "DEFAULT_NAME",
-  package: "yarn",
+  name: 'DEFAULT_NAME',
+  package: 'yarn',
   path: {
-    output: "dist",
-    public: "/"
+    output: 'dist',
+    public: '/',
   },
-  plugin: "DEFAULT_PLUGIN",
+  plugin: 'DEFAULT_PLUGIN',
   devServer: {
     port: 8888,
     https: false,
-    proxy: {}
+    proxy: {},
   },
-  publish: null
-}
-export {
-  defaultWCliConfigJson
-}
+  publish: null,
+};
+export { defaultWCliConfigJson };
