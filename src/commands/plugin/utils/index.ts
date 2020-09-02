@@ -149,6 +149,7 @@ export async function installPluginByNpm(npmName: string): Promise<string> {
     });
     // 删除临时文件夹
     await fse.remove(templatePluginPath);
+    success(`插件[${npmName}]下载成功，准备安装相关依赖`);
     autoPackageJsonInstall(downloadPluginPath);
     success(`插件[${npmName}]安装成功，你可以在项目中使用该插件！`);
     // 写入缓存

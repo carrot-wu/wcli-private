@@ -36,12 +36,12 @@ export function writePluginCache(params: WritePluginCacheParams): void {
 export function getPluginCacheByName(pluginName: string) {
   // 获取缓存的json文件
   if (!fse.existsSync(pluginCachePath)) {
-    throwHandleError('找不到插件缓存文件cache.json，请重新安装！');
+    throwHandleError('找不到插件缓存文件cache.json，请重新安装插件！');
   }
   const pluginCacheJson: PluginCacheJson = fse.readJsonSync(pluginCachePath);
   if (!pluginCacheJson[pluginName]) {
     // 找不到插件名
-    throwHandleError('插件缓存中找不到插件名称，请重新安装！');
+    throwHandleError(`查找不到插件${pluginName},请检查插件是否已安装`);
   }
   return pluginCacheJson[pluginName];
 }

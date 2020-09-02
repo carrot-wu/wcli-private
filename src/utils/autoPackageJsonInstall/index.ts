@@ -11,8 +11,7 @@ import { loading, success } from '../log';
  */
 export default function autoPackageJsonInstall(path: string): void {
   // 获取默认的安装插件命令 npm或者yarn
-
-  const { package: packageType = 'npm' } = currentWcliConfig;
+  const { package: packageType = 'npm' } = currentWcliConfig || {};
   const nodeModulesPath = resolve(path, 'node_modules');
   const packageJsonPath = resolve(path, 'package.json');
   // 存在package 不存在node_modules
