@@ -47,6 +47,7 @@ wcli plugin install https://gitlab.xxx.com:xxx.git
 1. **dev.js**: 执行`wcli dev`命令时执行的文件。
 2. **build.js**: 执行`wcli build`命令时执行的文件。
 3. **publish.js**: 执行`wcli publish`命令时执行的文件。
+3. **custom.js**: 执行`wcli custom`命令时执行的文件。
 4. **package.json**: 初始化的插件package.json文件。
 
 对于前三个文件的导出函数，会把一些可能使用到的参数变量或者wcli提供的一些通用方法通过context参数注入。具体context类型定义如下：
