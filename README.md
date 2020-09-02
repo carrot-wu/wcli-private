@@ -103,3 +103,7 @@ interface Context {
 ## wcli build
 
 跟wcli dev同理。可以自由定制项目打包时的环境以及参数等。
+
+## wcli custom [commands]...
+
+允许插件编写者自定义wcli custom xxx命令的编写.
