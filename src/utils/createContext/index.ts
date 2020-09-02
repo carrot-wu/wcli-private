@@ -11,7 +11,7 @@ import { currentBinPath, getCurrentBinFilePath } from '../file';
 
 // 传参给publish插件的context参数
 interface PublishExtraParams {
-  debug: boolean;
+  debug?: boolean;
   wcliConfigJson: WCliConfigJson;
   publishToken?: string;
   publishCommitMsg: string;
@@ -19,6 +19,9 @@ interface PublishExtraParams {
 // 传参给dev插件的context参数
 type DevExtraParams = Omit<PublishExtraParams, 'publishToken' | 'publishCommitMsg'>;
 
+interface CustomExtraParams extends DevExtraParams {
+  extraArgArray: string[];
+}
 interface PublishContext {
   config: {
     isDebug: boolean;
@@ -65,6 +68,26 @@ interface DevContext {
   };
 }
 
+interface CustomContext {
+  config: {
+    isDebug: boolean;
+    wcliConfigJson: WCliConfigJson;
+    extraArgArray: string[];
+  };
+  paths: {
+    currentBinPath: string;
+  };
+  utils: {
+    getCurrentBinFilePath: (...paths: string[]) => string;
+    logTools: typeof logTools;
+    throwHandleError: typeof throwHandleError;
+  };
+  toolsModules: {
+    prompt: typeof prompt;
+    axios: AxiosStatic;
+    fse: typeof fse;
+  };
+}
 /**
  * publish命令下往publish.js注入的依赖对象
  * @param {PublishExtraParams} publishExtraParam
@@ -105,7 +128,7 @@ export function createPublishContext(publishExtraParam: PublishExtraParams): Pub
  * @returns {DevContext}
  */
 export function createDevContext(devExtraParam: DevExtraParams): DevContext {
-  const { wcliConfigJson, debug } = devExtraParam;
+  const { wcliConfigJson, debug = false } = devExtraParam;
   return {
     config: {
       wcliConfigJson,
@@ -138,6 +161,34 @@ export function createBuildContext(buildExtraParam: DevExtraParams): DevContext 
     config: {
       wcliConfigJson,
       isDebug: debug,
+    },
+    paths: {
+      currentBinPath,
+    },
+    utils: {
+      getCurrentBinFilePath,
+      logTools,
+      throwHandleError,
+    },
+    toolsModules: {
+      prompt,
+      axios,
+      fse,
+    },
+  };
+}
+
+/**
+ * custom命令下往custom.js注入的依赖对象
+ * @param customExtraParam
+ */
+export function createCustomContext(customExtraParam: CustomExtraParams): CustomContext {
+  const { wcliConfigJson, debug = false, extraArgArray } = customExtraParam;
+  return {
+    config: {
+      wcliConfigJson,
+      isDebug: debug,
+      extraArgArray,
     },
     paths: {
       currentBinPath,

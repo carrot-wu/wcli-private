@@ -6,7 +6,15 @@ import { packageJson } from '@utils/file';
 import notifyUpdate from '@utils/notifyUpdate';
 import errorHandler from '@utils/errorHandler';
 import iconBanner from '@constants/banner';
-import { initCommand, devCommand, buildCommand, pluginCommand, publishCommand, upgradeCommand } from './commands';
+import {
+  initCommand,
+  devCommand,
+  buildCommand,
+  pluginCommand,
+  publishCommand,
+  upgradeCommand,
+  customCommand,
+} from './commands';
 
 const { version, name } = packageJson;
 // 注册本地指令
@@ -42,6 +50,12 @@ localCommander
   .option('-d, --debug', 'Publishing the static file to deploy'.green)
   .description(`${'[publish]'.blue}${'打包发布项目到wclicongfig.json下的制定仓库'.yellow}`)
   .action(errorHandler(publishCommand));
+
+// 自定义指令
+localCommander
+  .command('custom [command]')
+  .description(`${'[custom]'.blue}${'通过插件预设的方式支持除了wcli内置之外的自定义指令'.yellow}`)
+  .action(errorHandler(customCommand));
 
 // 插件相关指令
 localCommander

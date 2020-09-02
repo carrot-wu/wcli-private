@@ -7,9 +7,8 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "watch": true,
-    "sourceRoot": "src",
     "outDir": "dist"
   },
   "extends": "./tsconfig.extend",

@@ -58,12 +58,12 @@ export const originSuccess = logWithColor('success');
 export const originError = logWithColor('error');
 
 // loading的图标单独使用ora来出 有动效
-export const loading = (text: string) => {
+export const loading = (text = '加载中') => {
   SPINNER.start(text.yellow);
 };
 
 // 搭配ora的success
-export const success = (text: string) => {
+export const success = (text = '成功!') => {
   if (SPINNER.isSpinning) {
     SPINNER.succeed(text.green);
   } else {
@@ -71,7 +71,7 @@ export const success = (text: string) => {
   }
 };
 // 搭配ora的error
-export const error = (text: string) => {
+export const error = (text = '失败') => {
   if (SPINNER.isSpinning) {
     SPINNER.fail(text.red);
   } else {
