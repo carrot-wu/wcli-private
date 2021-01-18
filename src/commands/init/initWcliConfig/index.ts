@@ -6,10 +6,11 @@ import * as fse from 'fs-extra';
 import { defaultWCliConfigJson } from '@constants/index';
 import throwHandleError from '@utils/errorHandler/error';
 
+type ResetType = 'no' | 'yes';
 interface Choice {
-  key: string;
-  name: string;
-  message: string;
+  key: ResetType;
+  name: ResetType;
+  message: ResetType;
 }
 
 const initChoices: Choice[] = [
@@ -30,7 +31,7 @@ export default async function initNewWcliConfigJson() {
       name: 'isReset',
       choices: initChoices,
     };
-    const { isReset } = await prompt([promptSelect]);
+    const { isReset } = await prompt<{ isReset: ResetType }>([promptSelect]);
     if (isReset === 'no') {
       // 直接退出
       return false;

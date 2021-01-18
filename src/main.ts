@@ -28,7 +28,7 @@ localCommander.version(version, '-v, -V, --version').name(name.blue).usage(iconB
 // 初始化模式指令
 localCommander
   .command('init [command]')
-  .description(`${'[init]'.blue}${'通过init命令创建初始化wcliconfig.json, vue, react等模板'.yellow}`)
+  .description(`${'[init]'.blue}${'通过init命令创建初始化wcliconfig.json, vue, react rollup等模板'.yellow}`)
   .action(errorHandler(initCommand));
 
 // 开发模式指令

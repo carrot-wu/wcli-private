@@ -22,7 +22,7 @@ export default async function linkPlugin() {
     },
     filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, ''),
   };
-  const { localPluginPath } = await prompt([promptInputMsg]);
+  const { localPluginPath } = await prompt<{ localPluginPath: string }>([promptInputMsg]);
   if (!fse.existsSync(localPluginPath)) {
     // 插件路径不存在
     throwHandleError('查找不到当前插件目录地址，请检查路径是否存在');

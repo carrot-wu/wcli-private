@@ -20,7 +20,7 @@ export default async function createNewPlugin(): Promise<void> {
     },
     filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, ''),
   };
-  const { pluginName } = await prompt([promptInputMsg]);
+  const { pluginName } = await prompt<{ pluginName: string }>([promptInputMsg]);
   const pluginDirName = resolve(currentBinPath, pluginName);
   if (fse.existsSync(pluginDirName)) {
     // 检查目录是否已创建

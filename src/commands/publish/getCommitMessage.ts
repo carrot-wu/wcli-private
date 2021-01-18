@@ -19,6 +19,6 @@ export async function getCommitMessage(): Promise<string> {
     filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, ''),
   };
 
-  const { commitMsg } = await prompt([promptInputMsg]);
+  const { commitMsg } = await prompt<{ commitMsg: string }>([promptInputMsg]);
   return commitMsg;
 }

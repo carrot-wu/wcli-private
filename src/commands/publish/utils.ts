@@ -36,7 +36,7 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
     name: 'token',
     choices,
   };
-  const { token } = await prompt([promptSelectToken]);
+  const { token } = await prompt<{ token: string }>([promptSelectToken]);
 
   // 不需要设置token 不需要验证 后续不提示填写token
   if (token === NOT_NEED_TOKEN) {
@@ -61,7 +61,7 @@ async function checkPublishGitToken(plugin: string): Promise<string> {
     },
     filter: (val: string): string => val.replace(/(^[\s\uFEFF\xA0]+ | [\s\uFEFF\xA0]+$)/g, ''),
   };
-  const { newToken } = await prompt([promptInputToken]);
+  const { newToken } = await prompt<{ newToken: string }>([promptInputToken]);
   return newToken;
 }
 

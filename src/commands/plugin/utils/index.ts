@@ -9,10 +9,8 @@ import { loading, success } from '@utils/log';
 import autoPackageJsonInstall from '@utils/autoPackageJsonInstall';
 import { pluginsDirectionPath } from '@utils/file';
 import { writePluginCache } from '@utils/pluginCache';
+import { downloadGitRepoPromise, getDownloadGitRepoPath } from '@utils/downloadGitRepo';
 
-import download = require('download-git-repo');
-
-type PathArray = string[] | null;
 interface DownloadPluginByPathParams {
   downloadPath: string;
   downloadPluginPath: string;
@@ -27,39 +25,6 @@ function isGitlabGit(pluginGitPath: string): boolean {
 function getPluginNameByPluginGitPath(pluginGitPath: string): string {
   const PluginNameArray: string[] | null = /\/([^/]+)\.git$/.exec(pluginGitPath);
   return isArray(PluginNameArray) ? PluginNameArray[1] : pluginGitPath;
-}
-
-/**
- * promise化下载plugin方法
- * @returns {Promise<string>}
- */
-function downloadPluginByPath(path: string, downloadPluginPath: string): Promise<string> {
-  return new Promise((resolveDownload, rejectDownload) => {
-    download(path, downloadPluginPath, { clone: true }, (error) => {
-      if (error) {
-        rejectDownload(error);
-      } else {
-        resolveDownload(downloadPluginPath);
-      }
-    });
-  });
-}
-
-// 获取实际download-git-repo下载地址
-export function getDownloadGitRepoPath(pluginGitPath: string): string {
-  if (/github/.test(pluginGitPath)) {
-    // github项目 获取拥有者以及仓库名
-    const downloadGithubPathArray: PathArray = /github\.com[:/](.+)\.git$/.exec(pluginGitPath);
-    return isArray(downloadGithubPathArray) ? downloadGithubPathArray[1] : pluginGitPath;
-  }
-
-  if (/gitlab/.test(pluginGitPath)) {
-    const downloadGitLabPathArray: PathArray = /(?:git@|https:\/\/)(.+)\.git$/.exec(pluginGitPath);
-    const downloadGitlabPath = isArray(downloadGitLabPathArray) ? downloadGitLabPathArray[1] : pluginGitPath;
-    return `https://${downloadGitlabPath.replace('.com/', '.com:')}`;
-  }
-  // 错误 不符合github或者gitlab
-  throwHandleError('请检查插件地址是否正确，插件安装地址目前只支持github和gitlab');
 }
 
 /**
@@ -88,7 +53,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   // 插件下载前先创建目录结构
   await fse.ensureDir(downloadPluginPath);
   try {
-    await downloadPluginByPath(downloadPath, downloadPluginPath);
+    await downloadGitRepoPromise(downloadPath, downloadPluginPath);
     // 写入缓存
     writePluginCache({
       pluginName,

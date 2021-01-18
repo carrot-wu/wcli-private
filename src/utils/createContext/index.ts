@@ -13,8 +13,6 @@ import { currentBinPath, getCurrentBinFilePath } from '../file';
 interface PublishExtraParams {
   debug?: boolean;
   wcliConfigJson: WCliConfigJson;
-  publishToken?: string;
-  publishCommitMsg: string;
 }
 // 传参给dev插件的context参数
 type DevExtraParams = Omit<PublishExtraParams, 'publishToken' | 'publishCommitMsg'>;
@@ -26,8 +24,6 @@ interface PublishContext {
   config: {
     isDebug: boolean;
     wcliConfigJson: WCliConfigJson;
-    token?: string;
-    publishCommitMsg: string;
   };
   paths: {
     currentBinPath: string;
@@ -94,13 +90,11 @@ interface CustomContext {
  * @returns {PublishContext}
  */
 export function createPublishContext(publishExtraParam: PublishExtraParams): PublishContext {
-  const { wcliConfigJson, debug, publishToken, publishCommitMsg } = publishExtraParam;
+  const { wcliConfigJson, debug } = publishExtraParam;
   return {
     config: {
       wcliConfigJson,
       isDebug: debug,
-      token: publishToken,
-      publishCommitMsg,
     },
     paths: {
       currentBinPath,
