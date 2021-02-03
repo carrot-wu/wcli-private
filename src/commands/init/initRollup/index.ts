@@ -32,7 +32,7 @@ export default async function initRollup() {
   if (fse.existsSync(currentRollupPath)) {
     throwHandleError(`当前目录下存在同名文件夹${packageName}`);
   }
-  const getRollupDownloadPath = `${getDownloadGitRepoPath(rollupTemplatePath)}#main`;
+  const getRollupDownloadPath = getDownloadGitRepoPath(rollupTemplatePath, 'main');
   loading('rollup模板创建中...');
   // 下载文件
   await downloadGitRepoPromise(getRollupDownloadPath, currentRollupPath);

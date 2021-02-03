@@ -11,11 +11,11 @@ import { pluginsDirectionPath } from '@utils/file';
 import { writePluginCache } from '@utils/pluginCache';
 import { downloadGitRepoPromise, getDownloadGitRepoPath } from '@utils/downloadGitRepo';
 
-interface DownloadPluginByPathParams {
-  downloadPath: string;
-  downloadPluginPath: string;
-  sshToken?: string;
-}
+// interface DownloadPluginByPathParams {
+//   downloadPath: string;
+//   downloadPluginPath: string;
+//   sshToken?: string;
+// }
 
 // 是否是gitlab下载地址
 function isGitlabGit(pluginGitPath: string): boolean {
@@ -34,18 +34,24 @@ function getPluginNameByPluginGitPath(pluginGitPath: string): string {
  */
 export async function downloadPluginByGit(pluginGitPath: string): Promise<string> {
   // 检查插件地址是否正确
-  const isValid = /(?:git@|https:\/\/)(.+)\.git$/.exec(pluginGitPath);
+  const isValid = /(?:git@|https?:\/\/)(.+)\.git(#[^.]*)?$/.exec(pluginGitPath);
   if (!isValid) {
     // 不合法
     throwHandleError('插件下载地址不合法，只允许以.git为结尾的ssh方式以及https地址下载插件');
   }
+  // 获取分支名
+  const branchNameArray = /\.git#([^.]+)$/.exec(pluginGitPath);
+  const branchName = isArray(branchNameArray) ? branchNameArray[1] : 'master';
+
+  const formatPluginGitPath = pluginGitPath.replace(/\.git(#[^.]*)$/, '.git');
+
   // 获取插件名称
-  const pluginName = getPluginNameByPluginGitPath(pluginGitPath);
+  const pluginName = getPluginNameByPluginGitPath(formatPluginGitPath);
   // 先检查插件是否已经安装了
   if (getPluginPathWithPluginName(pluginName)) {
     throwHandleError('插件已在plugin目录下存在，请勿重新安装');
   }
-  const downloadPath = getDownloadGitRepoPath(pluginGitPath);
+  const downloadPath = getDownloadGitRepoPath(formatPluginGitPath, branchName);
   // 未安装 安装插件
   loading(`开始下载插件[${pluginName}]，请耐心等候...`);
   // 安装插件的地址
@@ -58,7 +64,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
     writePluginCache({
       pluginName,
       pluginType: 'git',
-      args: pluginGitPath,
+      args: formatPluginGitPath,
       pluginPath: downloadPluginPath,
     });
     success(`插件[${pluginName}]下载成功，正在安装插件所需依赖`);
