@@ -9,8 +9,13 @@ type WritePluginCacheParams = Omit<PluginCacheParams, 'version'>;
 // 插件插件完成时保存相对应的缓存
 export function writePluginCache(params: WritePluginCacheParams): void {
   const { pluginName, pluginPath } = params;
+  const packageJsonPath = resolve(pluginPath, './package.json');
+  let version = '1.0.0';
   // 获取缓存的json文件
-  const { version } = fse.readJsonSync(resolve(pluginPath, './package.json'));
+  if (fse.existsSync(packageJsonPath)) {
+    const { version: pluginVersion } = fse.readJsonSync(packageJsonPath);
+    version = pluginVersion;
+  }
   // 获取插件的版本号
   let writeCacheObj: PluginCacheJson = {
     [pluginName]: {

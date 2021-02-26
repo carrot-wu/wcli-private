@@ -2,39 +2,39 @@ import * as ora from 'ora';
 
 type InfoKey = 'success' | 'error' | 'info' | 'warn' | 'log';
 type InfoColor = 'green' | 'red' | 'blue' | 'yellow' | 'white';
-type InfoBgColor = 'bgGreen' | 'bgRed' | 'bgBlue' | 'bgYellow';
+type InfoBgColor = 'bgGreen' | 'bgRed' | 'bgBlue' | 'bgYellow' | 'green' | 'red' | 'blue' | 'yellow' | 'white';
 type InfoMap = {
   [K in InfoKey]: {
-    text: K;
+    text: string;
     color: InfoColor;
     bgColor: InfoBgColor;
   };
 };
 const infoMap: InfoMap = {
   success: {
-    text: 'success',
+    text: '√',
     color: 'green',
-    bgColor: 'bgGreen',
+    bgColor: 'green',
   },
   error: {
-    text: 'error',
+    text: '×',
     color: 'red',
-    bgColor: 'bgRed',
+    bgColor: 'red',
   },
   info: {
-    text: 'info',
+    text: '✈',
     color: 'blue',
-    bgColor: 'bgBlue',
+    bgColor: 'blue',
   },
   warn: {
-    text: 'warn',
+    text: '！',
     color: 'yellow',
-    bgColor: 'bgYellow',
+    bgColor: 'yellow',
   },
   log: {
-    text: 'log',
+    text: '',
     color: 'white',
-    bgColor: 'bgGreen',
+    bgColor: 'white',
   },
 };
 

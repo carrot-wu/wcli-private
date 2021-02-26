@@ -41,7 +41,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   }
   // 获取分支名
   const branchNameArray = /\.git#([^.]+)$/.exec(pluginGitPath);
-  const branchName = isArray(branchNameArray) ? branchNameArray[1] : 'master';
+  const branchName = isArray(branchNameArray) ? branchNameArray[1] : '';
 
   const formatPluginGitPath = pluginGitPath.replace(/\.git(#[^.]*)$/, '.git');
 
@@ -51,7 +51,11 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   if (getPluginPathWithPluginName(pluginName)) {
     throwHandleError('插件已在plugin目录下存在，请勿重新安装');
   }
-  const downloadPath = getDownloadGitRepoPath(formatPluginGitPath, branchName);
+  const downloadPath = getDownloadGitRepoPath({
+    pluginGitPath: formatPluginGitPath,
+    branchName,
+    projectName: pluginName,
+  });
   // 未安装 安装插件
   loading(`开始下载插件[${pluginName}]，请耐心等候...`);
   // 安装插件的地址
@@ -59,7 +63,7 @@ export async function downloadPluginByGit(pluginGitPath: string): Promise<string
   // 插件下载前先创建目录结构
   await fse.ensureDir(downloadPluginPath);
   try {
-    await downloadGitRepoPromise(downloadPath, downloadPluginPath);
+    await downloadGitRepoPromise(downloadPath, pluginsDirectionPath);
     // 写入缓存
     writePluginCache({
       pluginName,

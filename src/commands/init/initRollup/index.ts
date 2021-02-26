@@ -1,7 +1,7 @@
 import { prompt } from 'enquirer';
 import * as fse from 'fs-extra';
 import { downloadGitRepoPromise, getDownloadGitRepoPath } from '@utils/downloadGitRepo';
-import { getCurrentBinFilePath } from '@utils/file';
+import { getCurrentBinFilePath, currentBinPath } from '@utils/file';
 import throwHandleError from '@utils/errorHandler/error';
 import { loading, success } from '@utils/log';
 import { resolve } from 'path';
@@ -32,12 +32,18 @@ export default async function initRollup() {
   if (fse.existsSync(currentRollupPath)) {
     throwHandleError(`当前目录下存在同名文件夹${packageName}`);
   }
-  const getRollupDownloadPath = getDownloadGitRepoPath(rollupTemplatePath, 'main');
+  // const getRollupDownloadPath = getDownloadGitRepoPath(rollupTemplatePath, 'main');
+  const getRollupDownloadPath = getDownloadGitRepoPath({
+    pluginGitPath: rollupTemplatePath,
+    projectName: packageName,
+    branchName: 'main',
+  });
   loading('rollup模板创建中...');
   // 下载文件
-  await downloadGitRepoPromise(getRollupDownloadPath, currentRollupPath);
+  await downloadGitRepoPromise(getRollupDownloadPath, currentBinPath);
 
   const rollupPackagePath = resolve(currentRollupPath, './package.json');
+  console.log(currentRollupPath);
   const defaultPackageJson = fse.readJsonSync(rollupPackagePath);
   fse.writeJsonSync(
     rollupPackagePath,

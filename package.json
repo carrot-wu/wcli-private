@@ -1,6 +1,6 @@
 {
   "name": "@carrotwu/wcli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A global cli tool that supports custom development, packaging and pushing",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "@types/module-alias": "^2.0.0",
     "@types/node": "^14.14.21",
     "@types/update-notifier": "^5.0.0",
+    "@types/git-url-parse": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^7.18.0",
@@ -48,6 +49,7 @@
     "download-git-repo": "^3.0.2",
     "enquirer": "^2.3.6",
     "fs-extra": "^9.0.1",
+    "git-url-parse": "^11.4.4",
     "module-alias": "^2.2.2",
     "ora": "^5.2.0",
     "simple-git": "^2.31.0",
