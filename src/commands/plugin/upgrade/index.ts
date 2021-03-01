@@ -39,6 +39,7 @@ const pluginUpgrade = async (pluginName: string) => {
         cwd: pluginPath,
       });
       success(gitStdout);
+      success(`${pluginName} 插件更新成功`);
       break;
     }
     case 'local':
