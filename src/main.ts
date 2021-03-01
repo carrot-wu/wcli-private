@@ -1,11 +1,17 @@
 #! /usr/bin/env node
-import 'module-alias/register';
+import * as moduleAlias from 'module-alias';
 import 'colors';
+import * as path from 'path';
+
+const getAliasPath = (aliasPath: string) => path.resolve(__dirname, aliasPath);
+moduleAlias(getAliasPath('../'));
+
+/* eslint-disable import/first */
 import * as commander from 'commander';
-import { packageJson } from '@utils/file';
 import notifyUpdate from '@utils/notifyUpdate';
 import errorHandler from '@utils/errorHandler';
 import iconBanner from '@constants/banner';
+import { packageJson } from '@utils/file';
 import {
   initCommand,
   devCommand,
